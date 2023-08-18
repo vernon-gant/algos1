@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedListTasks", "LinkedListTasks\LinkedListTasks.csproj", "{C1BE7BAA-5250-4552-ACF1-A349BB962D8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedListCode", "LinkedListCode\LinkedListCode.csproj", "{C1BE7BAA-5250-4552-ACF1-A349BB962D8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{14ECD4EA-D2BE-4948-B8CC-92FF846B4C66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedListTests", "LinkedListTests\LinkedListTests.csproj", "{14ECD4EA-D2BE-4948-B8CC-92FF846B4C66}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task1", "Task1", "{97F47C4B-D1DC-401D-B100-D797230CB9FC}"
 EndProject
