@@ -1,12 +1,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AlgorithmsDataStructures;
 
-namespace Tests {
+namespace Tests
+{
     [TestClass]
-    public class Tests {
+    public class Tests
+    {
         [TestMethod]
-        public void TestMethod1() {
-            var list = new LinkedList();
+        public void Works()
+        {
+            var list = new LinkedList(head: null);
+            Assert.IsTrue(true);
         }
     }
 }

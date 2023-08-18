@@ -19,6 +19,11 @@ namespace AlgorithmsDataStructures {
             tail = null;
         }
 
+        public LinkedList(Node head) : this()
+        {
+            this.head = head;
+        }
+
         public void AddInTail(Node _item) {
             if (head == null) head = _item;
             else tail.next = _item;

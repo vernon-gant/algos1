@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedListTasks", "LinkedLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{14ECD4EA-D2BE-4948-B8CC-92FF846B4C66}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task1", "Task1", "{97F47C4B-D1DC-401D-B100-D797230CB9FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{14ECD4EA-D2BE-4948-B8CC-92FF846B4C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14ECD4EA-D2BE-4948-B8CC-92FF846B4C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14ECD4EA-D2BE-4948-B8CC-92FF846B4C66}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C1BE7BAA-5250-4552-ACF1-A349BB962D8B} = {97F47C4B-D1DC-401D-B100-D797230CB9FC}
+		{14ECD4EA-D2BE-4948-B8CC-92FF846B4C66} = {97F47C4B-D1DC-401D-B100-D797230CB9FC}
 	EndGlobalSection
 EndGlobal
