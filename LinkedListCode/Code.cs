@@ -22,7 +22,7 @@ namespace AlgorithmsDataStructures
         public Node head;
 
         public Node tail;
-        
+
 
         public LinkedList()
         {
@@ -60,37 +60,91 @@ namespace AlgorithmsDataStructures
         {
             List<Node> nodes = new List<Node>();
 
-            // здесь будет ваш код поиска всех узлов по заданному значению
+            Node temp = head;
+
+            while (temp != null)
+            {
+                if (temp.value == _value) nodes.Add(temp);
+
+                temp = temp.next;
+            }
+
             return nodes;
         }
 
         public bool Remove(int _value)
         {
-            // здесь будет ваш код удаления одного узла по заданному значению
-            return true; // если узел был удалён
+            if (head == null) return false;
+
+            if (head.value == _value)
+            {
+                head = head.next;
+
+                if (head == null)
+                {
+                    tail = null;
+                }
+
+                return true;
+            }
+
+            Node toDel, previous = head;
+
+            for (toDel = head; toDel != null && toDel.value != _value; toDel = toDel.next)
+            {
+                previous = toDel;
+            }
+
+            if (toDel == null) return false;
+
+            previous.next = toDel.next;
+
+            if (toDel.next == null) tail = previous;
+
+            return true;
         }
 
         public void RemoveAll(int _value)
         {
-            // здесь будет ваш код удаления всех узлов по заданному значению
+            bool goOn;
+
+            do
+            {
+                goOn = Remove(_value);
+            } while (goOn);
         }
 
         public void Clear()
         {
-            // здесь будет ваш код очистки всего списка
+            head = null;
+            tail = null;
         }
 
         public int Count()
         {
-            return 0; // здесь будет ваш код подсчёта количества элементов в списке
+            int result = 0;
+
+            for (Node temp = head; temp != null; temp = temp.next)
+            {
+                result++;
+            }
+
+            return result;
         }
 
         public void InsertAfter(Node _nodeAfter, Node _nodeToInsert)
         {
-            // здесь будет ваш код вставки узла после заданного
+            if (_nodeAfter == null)
+            {
+                head = _nodeToInsert;
+                tail = _nodeToInsert;
+                return;
+            }
 
-            // если _nodeAfter = null , 
-            // добавьте новый элемент первым в списке 
+            var next = _nodeAfter.next;
+            _nodeAfter.next = _nodeToInsert;
+            _nodeToInsert.next = next;
+            if (next == null) tail = _nodeToInsert;
         }
 
     }
