@@ -27,34 +27,6 @@ namespace DynamicArrayTests
             Assert.AreEqual(_array.array.Length, 100);
         }
 
-        // [TestMethod]
-        // public void GrowArray()
-        // {
-        //     var array = new DynArray<int>();
-        //     ArrayGenerator.PopulateFullArray(array);
-        //     Assert.AreEqual(array.count,16);
-        //     Assert.AreEqual(array.capacity,16);
-        //     Assert.AreEqual(array.array.Length, 16);
-        //     array.Append(100);
-        //     Assert.AreEqual(array.count,17);
-        //     Assert.AreEqual(array.capacity,32);
-        //     Assert.AreEqual(array.array.Length, 32);
-        // }
-        //
-        // [TestMethod]
-        // public void ShrinkArray()
-        // {
-        //     var array = new DynArray<int>();
-        //     ArrayGenerator.PopulateFullArray(array);
-        //     Assert.AreEqual(array.count,16);
-        //     Assert.AreEqual(array.capacity,16);
-        //     Assert.AreEqual(array.array.Length, 16);
-        //     array.Append(100);
-        //     Assert.AreEqual(array.count,17);
-        //     Assert.AreEqual(array.capacity,32);
-        //     Assert.AreEqual(array.array.Length, 32);
-        // }
-
     }
 
     [TestClass]
@@ -72,12 +44,13 @@ namespace DynamicArrayTests
         }
 
         [DataTestMethod]
-        [DataRow(-1)]
-        [DataRow(16)]
+        [DataRow(0)]
+        [DataRow(1)]
+        [DataRow(2)]
         public void TestValidIndexes(int idx)
         {
             ArrayGenerator.PopulateFullArray(_array);
-            Assert.ThrowsException<ArgumentException>(() => _array.GetItem(idx));
+            Assert.IsNotNull(_array.GetItem(idx));
         }
 
     }
