@@ -28,6 +28,8 @@ namespace AlgorithmsDataStructures
         public void MakeArray(int new_capacity)
         {
             var newArray = new T[new_capacity];
+            // Use count because when shrinking an array,
+            // using array length will lead to not enough space in new array
             if (count > 0) Array.Copy(array, newArray, count);
             array = newArray;
             capacity = new_capacity;
@@ -80,8 +82,10 @@ namespace AlgorithmsDataStructures
             if (index < 0 || index >= count)
                 throw new ArgumentException();
 
+            // Check also for unequal to min capacity to avoid redundant resizing
             if (count - 1 < (int)(capacity * DECREASE_CONDITION) && capacity != MIN_CAPACITY)
             {
+                // maintain min size
                 int newCapacity = capacity / DECREASE_RATIO < 16 ? 16 : (int)(capacity / DECREASE_RATIO);
                 MakeArray(newCapacity);
             }
@@ -90,12 +94,13 @@ namespace AlgorithmsDataStructures
             // will get OutOfBounds cause of i = index + 1
             if (index != count - 1)
             {
+                // Shift left
                 for (int i = index + 1; i < count; i++)
                 {
                     array[i - 1] = array[i];
                 }
             }
-
+            // Reset last elements
             array[count - 1] = default;
             count--;
         }
