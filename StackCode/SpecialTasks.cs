@@ -44,6 +44,8 @@ namespace StackCode
                     continue;
                 }
 
+                // Check if we are in situatioin, when there are not enough numbers for an operation
+                // like 1 +
                 if (tempStack.Size() < 2) throw new ArgumentException("Invalid equation");
 
                 int result = tempStack.Pop();
@@ -70,7 +72,8 @@ namespace StackCode
                 tempStack.Push(result);
             }
 
-            // If there is no trailing operator which maps last numbers to result => equation is invalid.
+            // If there is no trailing operator which maps last numbers to result or there
+            // are some signs/numbers left in the equation => equation is invalid.
             if (tempStack.Size() > 1 || equation.Size() > 0) throw new ArgumentException("Invalid equation");
 
             return tempStack.Pop();
