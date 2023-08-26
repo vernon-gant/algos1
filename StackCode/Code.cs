@@ -29,13 +29,8 @@ namespace AlgorithmsDataStructures
         public int Size()
         {
             var result = 0;
-            var tempNode = _head;
 
-            while (tempNode != null)
-            {
-                result++;
-                tempNode = tempNode._next;
-            }
+            for (var tempNode = _head; tempNode != null; tempNode = tempNode._next) result++;
 
             return result;
         }
