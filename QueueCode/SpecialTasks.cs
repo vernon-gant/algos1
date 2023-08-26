@@ -9,6 +9,7 @@ namespace AlgorithmsDataStructures
      * буфера, что даёт нам О(n). Поэтому в универе все делают очередь через LL :)
      */
 
+    // 3. 
     public class Roller
     {
 
@@ -27,6 +28,7 @@ namespace AlgorithmsDataStructures
     }
 
 
+    // 4. O(n) for dequeue, not a great deal...
     public class StackQueue<T>
     {
 
