@@ -48,22 +48,24 @@ namespace StackCode
                 // like 1 +
                 if (tempStack.Size() < 2) throw new ArgumentException("Invalid equation");
 
-                int result = tempStack.Pop();
+                int result;
+                int right = tempStack.Pop();
+                int left = tempStack.Pop();
 
                 switch (equationOperand)
                 {
                     case "+":
-                        result += tempStack.Pop();
+                        result = left + right;
                         break;
                     case "-":
-                        result = tempStack.Pop() - result;
+                        result = left - right;
                         break;
                     case "*":
-                        result *= tempStack.Pop();
+                        result = left * right;
                         break;
                     case "/":
-                        if (result == 0) throw new DivideByZeroException();
-                        result = tempStack.Pop() / result;
+                        if (right == 0) throw new DivideByZeroException();
+                        result = left / right;
                         break;
                     default:
                         throw new ArgumentException("Invalid sign in the equation!");
