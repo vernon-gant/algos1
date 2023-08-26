@@ -48,6 +48,9 @@ namespace StackCode
                 // like 1 +
                 if (tempStack.Size() < 2) throw new ArgumentException("Invalid equation");
 
+                // Right operand is popped first as it pushed last : 100 88 + =
+                // right would result in tempStack (88 - head,100)  when reaching "+" 
+                // so right operand is popped first from tempStack
                 int result;
                 int right = tempStack.Pop();
                 int left = tempStack.Pop();
