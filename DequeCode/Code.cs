@@ -18,7 +18,7 @@ namespace AlgorithmsDataStructures
 
     }
 
-    public class Deque<T>
+    class Deque<T>
     {
 
         public Node<T> _head;
