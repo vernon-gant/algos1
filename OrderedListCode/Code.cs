@@ -10,11 +10,11 @@ namespace AlgorithmsDataStructures
 
         public Node<T> next, prev;
 
+        public Node() : this(default) { }
+
         public Node(T _value)
         {
             value = _value;
-            next = null;
-            prev = null;
         }
 
     }
@@ -22,6 +22,12 @@ namespace AlgorithmsDataStructures
 
     public class DummyNode<T> : Node<T>
     {
+
+        public DummyNode()
+        {
+            next = this;
+            prev = this;
+        }
 
         public DummyNode(T _value) : base(_value) { }
 
@@ -40,16 +46,14 @@ namespace AlgorithmsDataStructures
 
         public OrderedList(bool asc)
         {
-            head = null;
-            tail = null;
-            _dummy = null;
+            _dummy = new DummyNode<T>();
             size = 0;
             _ascending = asc;
         }
 
         public int Compare(T v1, T v2)
         {
-            int result = 0;
+            int result;
             if (typeof(T) == typeof(String))
             {
                 // trim strings and compare them
@@ -64,8 +68,7 @@ namespace AlgorithmsDataStructures
             }
             else
             {
-                // use object for type casting and then
-                // to int
+                // use object for type casting and then to int
                 var int1 = (int)(object)v1;
                 var int2 = (int)(object)v2;
                 if (int1 < int2) result = -1;
@@ -85,42 +88,38 @@ namespace AlgorithmsDataStructures
 
             var newNode = new Node<T>(value);
             size++;
-            if (head == null)
+            // If value is less then head then or equal to the smallest
+            // element in list then we can add immediately add it or list is empty
+            if (_dummy.next is DummyNode<T> ||
+                Compare(value, _dummy.next.value) == -1 ||
+                Compare(value, _dummy.next.value) == 0)
             {
-                head = newNode;
-                tail = newNode;
+                newNode.next = _dummy.next;
+                _dummy.next.prev = newNode;
+                newNode.prev = _dummy;
+                _dummy.next = newNode;
                 return;
             }
-            // If value is less then head then we can add immediately add it
-            if (Compare(value, head.value) == -1 || Compare(value, head.value) == 0)
-            {
-                newNode.next = head;
-                head.prev = newNode;
-                head = newNode;
-                return;
-            }
-            // Or if it is bigger than tail
-            if (Compare(value, tail.value) == 1 || Compare(value, head.value) == 0)
-            {
-                tail.next = newNode;
-                newNode.prev = tail;
-                tail = newNode;
-                return;
-            }
-            var afterInsert = head;
-            for (; Compare(afterInsert.value, value) == -1; afterInsert = afterInsert.next) { }
-            newNode.next = afterInsert;
-            newNode.prev = afterInsert.prev;
-            afterInsert.prev.next = newNode;
-            afterInsert.prev = newNode;
+            var beforeInsert = _dummy.next;
+            for (;
+                 !(beforeInsert.next is DummyNode<T>) && Compare(beforeInsert.next.value, value) == -1;
+                 beforeInsert = beforeInsert.next) { }
+            newNode.next = beforeInsert.next;
+            beforeInsert.next.prev = newNode;
+            beforeInsert.next = newNode;
+            newNode.prev = beforeInsert;
         }
 
         public Node<T> Find(T val)
         {
-            // Check if element is out of max min range
-            if (Compare(val, head.value) == -1 || Compare(val, tail.value) == 1) return null;
+            // Check if element is out of max min range, list is empty
+            // or passed element is null
+            if (_dummy.next is DummyNode<T> ||
+                Compare(val, _dummy.next.value) == -1 ||
+                Compare(val, _dummy.prev.value) == 1 ||
+                val == null) return null;
 
-            var temp = head;
+            var temp = _dummy.next;
             // Iterate until a bigger number is found
             for (; Compare(temp.value, val) == -1; temp = temp.next) { }
             // If it does not equal to the val => not found
@@ -131,21 +130,23 @@ namespace AlgorithmsDataStructures
 
         public void Delete(T val)
         {
-            if (val == null) return;
-            // Check if element is out of max min range
-            if (Compare(val, head.value) == -1 || Compare(val, tail.value) == 1) return;
+            var toDelete = Find(val);
 
-            if (Compare(val, head.value) == 0)
-            {
-                
-            }
+            if (toDelete == null) return;
+
+            var beforeDelete = toDelete.prev;
+            var afterDelete = toDelete.next;
+            beforeDelete.next = afterDelete;
+            afterDelete.prev = beforeDelete;
+            size--;
         }
 
         public void Clear(bool asc)
         {
             _ascending = asc;
-            head = null;
-            tail = null;
+            _dummy.next = _dummy;
+            _dummy.prev = _dummy;
+            size = 0;
         }
 
         public int Count()
@@ -156,8 +157,8 @@ namespace AlgorithmsDataStructures
         public List<Node<T>> GetAll()
         {
             List<Node<T>> r = new List<Node<T>>();
-            Node<T> node = head;
-            while (node != null)
+            Node<T> node = _dummy.next;
+            while (!(node is DummyNode<T>))
             {
                 r.Add(node);
                 node = node.next;
