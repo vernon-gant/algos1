@@ -10,11 +10,11 @@ namespace AlgorithmsDataStructures
 
         public Node<T> next, prev;
 
-        public Node() : this(default) { }
-
         public Node(T _value)
         {
             value = _value;
+            prev = null;
+            next = null;
         }
 
     }
@@ -99,7 +99,8 @@ namespace AlgorithmsDataStructures
                 return;
             }
             var beforeInsert = head;
-            for (;Compare(beforeInsert.next.value, value) == -1;
+            for (;
+                 Compare(beforeInsert.next.value, value) == -1;
                  beforeInsert = beforeInsert.next) { }
             newNode.next = beforeInsert.next;
             beforeInsert.next.prev = newNode;
@@ -140,7 +141,8 @@ namespace AlgorithmsDataStructures
             {
                 head = head.next;
                 head.prev = null;
-            } else if (toDelete == tail)
+            }
+            else if (toDelete == tail)
             {
                 tail = tail.prev;
                 tail.next = null;
@@ -150,7 +152,7 @@ namespace AlgorithmsDataStructures
                 var beforeDelete = toDelete.prev;
                 var afterDelete = toDelete.next;
                 beforeDelete.next = afterDelete;
-                afterDelete.prev = beforeDelete;    
+                afterDelete.prev = beforeDelete;
             }
             size--;
         }
@@ -167,12 +169,12 @@ namespace AlgorithmsDataStructures
         {
             return size;
         }
-        
+
         List<Node<T>> GetAll() // выдать все элементы упорядоченного 
         {
             List<Node<T>> r = new List<Node<T>>();
             Node<T> node = head;
-            while(node != null)
+            while (node != null)
             {
                 r.Add(node);
                 node = node.next;
