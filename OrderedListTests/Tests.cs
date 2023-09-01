@@ -42,9 +42,9 @@ namespace OrderedListTests
         public void InitialEmpty()
         {
             _list.Add(1);
-            Assert.AreEqual(_list._dummy.next.value, 1);
-            Assert.AreNotSame(_list._dummy, _list._dummy.next);
-            Assert.AreNotSame(_list._dummy, _list._dummy.prev);
+            Assert.AreEqual(_list.head.value, 1);
+            Assert.AreEqual(_list.tail.value, 1);
+            Assert.AreSame(_list.head, _list.tail);
             Assert.AreEqual(_list.Count(), 1);
         }
 
@@ -53,9 +53,9 @@ namespace OrderedListTests
         {
             _list.Add(1);
             _list.Add(2);
-            Assert.AreNotEqual(_list._dummy.prev.value, 1);
-            Assert.AreEqual(_list._dummy.prev.value, 2);
-            Assert.AreEqual(_list._dummy.prev.prev.value, 1);
+            Assert.AreEqual(_list.head.value, 1);
+            Assert.AreEqual(_list.tail.value, 2);
+            Assert.AreNotSame(_list.head, _list.tail);
             Assert.AreEqual(_list.Count(), 2);
         }
 
@@ -64,9 +64,9 @@ namespace OrderedListTests
         {
             _list.Add(1);
             _list.Add(-1);
-            Assert.AreNotEqual(_list._dummy.next.value, 1);
-            Assert.AreEqual(_list._dummy.next.value, -1);
-            Assert.AreEqual(_list._dummy.next.next.value, 1);
+            Assert.AreEqual(_list.head.value, -1);
+            Assert.AreEqual(_list.tail.value, 1);
+            Assert.AreNotSame(_list.head, _list.tail);
             Assert.AreEqual(_list.Count(), 2);
         }
 
@@ -95,9 +95,9 @@ namespace OrderedListTests
         public void InitialEmpty()
         {
             _list.Add(1);
-            Assert.AreEqual(_list._dummy.next.value, 1);
-            Assert.AreNotSame(_list._dummy, _list._dummy.next);
-            Assert.AreNotSame(_list._dummy, _list._dummy.prev);
+            Assert.AreEqual(_list.head.value, 1);
+            Assert.AreEqual(_list.tail.value, 1);
+            Assert.AreSame(_list.head, _list.tail);
             Assert.AreEqual(_list.Count(), 1);
         }
 
@@ -106,9 +106,9 @@ namespace OrderedListTests
         {
             _list.Add(1);
             _list.Add(2);
-            Assert.AreEqual(_list._dummy.prev.value, 1);
-            Assert.AreEqual(_list._dummy.next.value, 2);
-            Assert.AreEqual(_list._dummy.next.next.value, 1);
+            Assert.AreEqual(_list.head.value, 2);
+            Assert.AreEqual(_list.tail.value, 1);
+            Assert.AreNotSame(_list.head, _list.tail);
             Assert.AreEqual(_list.Count(), 2);
         }
 
@@ -117,9 +117,9 @@ namespace OrderedListTests
         {
             _list.Add(1);
             _list.Add(-1);
-            Assert.AreEqual(_list._dummy.next.value, 1);
-            Assert.AreEqual(_list._dummy.prev.value, -1);
-            Assert.AreEqual(_list._dummy.next.next.value, -1);
+            Assert.AreEqual(_list.head.value, 1);
+            Assert.AreEqual(_list.tail.value, -1);
+            Assert.AreNotSame(_list.head, _list.tail);
             Assert.AreEqual(_list.Count(), 2);
         }
 
@@ -185,7 +185,7 @@ namespace OrderedListTests
     public class TestDelete
     {
 
-        private readonly OrderedList<int> _list = new(true);
+        private readonly OrderedList<int> _list = new(false);
         
         [TestMethod]
         public void DeleteNull()
@@ -205,8 +205,8 @@ namespace OrderedListTests
             _list.Add(1);
             _list.Delete(1);
             Assert.AreEqual(_list.Count(), 0);
-            Assert.AreSame(_list._dummy, _list._dummy.next);
-            Assert.AreSame(_list._dummy, _list._dummy.prev);
+            Assert.IsNull(_list.head);
+            Assert.IsNull(_list.tail);
         }
 
         [TestMethod]
@@ -216,7 +216,7 @@ namespace OrderedListTests
             _list.Add(2);
             _list.Delete(1);
             Assert.AreEqual(_list.Count(), 1);
-            Assert.AreSame(_list._dummy.next, _list._dummy.prev);
+            Assert.AreSame(_list.head, _list.tail);
         }
 
         [TestMethod]
@@ -226,10 +226,10 @@ namespace OrderedListTests
             _list.Add(2);
             _list.Delete(2);
             Assert.AreEqual(_list.Count(), 1);
-            Assert.AreSame(_list._dummy.next, _list._dummy.prev);
+            Assert.AreSame(_list.head, _list.tail);
         }
 
-        [DataRow(0)]
+        [DataRow(10)]
         [DataRow(50)]
         [DataRow(80)]
         [DataTestMethod]

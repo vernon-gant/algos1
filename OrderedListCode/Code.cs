@@ -19,26 +19,10 @@ namespace AlgorithmsDataStructures
 
     }
 
-
-    public class DummyNode<T> : Node<T>
-    {
-
-        public DummyNode()
-        {
-            next = this;
-            prev = this;
-        }
-
-        public DummyNode(T _value) : base(_value) { }
-
-    }
-
     public class OrderedList<T>
     {
 
         public Node<T> head, tail;
-
-        public DummyNode<T> _dummy;
 
         private bool _ascending;
 
@@ -46,7 +30,8 @@ namespace AlgorithmsDataStructures
 
         public OrderedList(bool asc)
         {
-            _dummy = new DummyNode<T>();
+            head = null;
+            tail = null;
             size = 0;
             _ascending = asc;
         }
@@ -88,21 +73,33 @@ namespace AlgorithmsDataStructures
 
             var newNode = new Node<T>(value);
             size++;
-            // If value is less then head then or equal to the smallest
-            // element in list then we can add immediately add it or list is empty
-            if (_dummy.next is DummyNode<T> ||
-                Compare(value, _dummy.next.value) == -1 ||
-                Compare(value, _dummy.next.value) == 0)
+            // If the list is empty
+            if (head == null)
             {
-                newNode.next = _dummy.next;
-                _dummy.next.prev = newNode;
-                newNode.prev = _dummy;
-                _dummy.next = newNode;
+                head = newNode;
+                tail = newNode;
                 return;
             }
-            var beforeInsert = _dummy.next;
-            for (;
-                 !(beforeInsert.next is DummyNode<T>) && Compare(beforeInsert.next.value, value) == -1;
+            // If value is less then head then or equal(head is smallest element)
+            if (Compare(value, head.value) == -1 ||
+                Compare(value, head.value) == 0)
+            {
+                newNode.next = head;
+                head.prev = newNode;
+                head = newNode;
+                return;
+            }
+            // If value is less then head then or equal(head is smallest element)
+            if (Compare(value, tail.value) == 1 ||
+                Compare(value, tail.value) == 0)
+            {
+                tail.next = newNode;
+                newNode.prev = tail;
+                tail = newNode;
+                return;
+            }
+            var beforeInsert = head;
+            for (;Compare(beforeInsert.next.value, value) == -1;
                  beforeInsert = beforeInsert.next) { }
             newNode.next = beforeInsert.next;
             beforeInsert.next.prev = newNode;
@@ -114,12 +111,12 @@ namespace AlgorithmsDataStructures
         {
             // Check if element is out of max min range, list is empty
             // or passed element is null
-            if (_dummy.next is DummyNode<T> ||
-                Compare(val, _dummy.next.value) == -1 ||
-                Compare(val, _dummy.prev.value) == 1 ||
-                val == null) return null;
+            if (size == 0 ||
+                val == null ||
+                Compare(val, head.value) == -1 ||
+                Compare(val, tail.value) == 1) return null;
 
-            var temp = _dummy.next;
+            var temp = head;
             // Iterate until a bigger number is found
             for (; Compare(temp.value, val) == -1; temp = temp.next) { }
             // If it does not equal to the val => not found
@@ -134,18 +131,35 @@ namespace AlgorithmsDataStructures
 
             if (toDelete == null) return;
 
-            var beforeDelete = toDelete.prev;
-            var afterDelete = toDelete.next;
-            beforeDelete.next = afterDelete;
-            afterDelete.prev = beforeDelete;
+            if (toDelete == tail && toDelete == head)
+            {
+                Clear(_ascending);
+                return;
+            }
+            if (toDelete == head)
+            {
+                head = head.next;
+                head.prev = null;
+            } else if (toDelete == tail)
+            {
+                tail = tail.prev;
+                tail.next = null;
+            }
+            else
+            {
+                var beforeDelete = toDelete.prev;
+                var afterDelete = toDelete.next;
+                beforeDelete.next = afterDelete;
+                afterDelete.prev = beforeDelete;    
+            }
             size--;
         }
 
         public void Clear(bool asc)
         {
             _ascending = asc;
-            _dummy.next = _dummy;
-            _dummy.prev = _dummy;
+            head = null;
+            tail = null;
             size = 0;
         }
 
@@ -153,12 +167,12 @@ namespace AlgorithmsDataStructures
         {
             return size;
         }
-
-        public List<Node<T>> GetAll()
+        
+        List<Node<T>> GetAll() // выдать все элементы упорядоченного 
         {
             List<Node<T>> r = new List<Node<T>>();
-            Node<T> node = _dummy.next;
-            while (!(node is DummyNode<T>))
+            Node<T> node = head;
+            while(node != null)
             {
                 r.Add(node);
                 node = node.next;
