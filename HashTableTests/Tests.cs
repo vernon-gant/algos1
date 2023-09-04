@@ -15,6 +15,15 @@ namespace HashTableTests
         {
             Assert.AreEqual(_hashTable.HashFun(""), 0);
         }
+        
+        [DataTestMethod]
+        [DataRow("2039enghubntoerbn")]
+        [DataRow("12345678901234567890")]
+        [DataRow("hbdvudksbvruegbnrhutihgbiurebvuierbvieu")]
+        public void TestSuccess(string value)
+        {
+            Assert.AreNotEqual(_hashTable.HashFun(value), 0);
+        }
 
         [TestMethod]
         public void TestConsistency()
@@ -42,7 +51,7 @@ namespace HashTableTests
         [TestMethod]
         public void TestSuccessEmpty()
         {
-            var idx = _hashTable.SeekSlot("TEST");
+            var idx = _hashTable.SeekSlot("0123456789");
             Assert.AreNotEqual(idx, -1);
         }
         

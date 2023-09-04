@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace AlgorithmsDataStructures
 {
@@ -28,7 +29,7 @@ namespace AlgorithmsDataStructures
             int result = 0;
             for (int i = 0; i < value.Length; i++)
             {
-                result += value[i] * (int)Math.Pow(26, value.Length - i);
+                result += (value[i] * (int)Math.Pow(26, value.Length - i)) % slots.Length;
             }
             return result % slots.Length;
         }
