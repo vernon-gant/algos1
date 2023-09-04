@@ -40,8 +40,18 @@ namespace HashTableTests
         private readonly HashTable _hashTable = new(19, 3);
 
         [TestMethod]
-        public void TestSuccess()
+        public void TestSuccessEmpty()
         {
+            var idx = _hashTable.SeekSlot("TEST");
+            Assert.AreNotEqual(idx, -1);
+        }
+        
+        [TestMethod]
+        public void TestSuccessNotEmpty()
+        {
+            _hashTable.Put("Hello");
+            _hashTable.Put("My");
+            _hashTable.Put("Friend!");
             var idx = _hashTable.SeekSlot("TEST");
             Assert.AreNotEqual(idx, -1);
         }
@@ -84,8 +94,17 @@ namespace HashTableTests
         }
 
         [TestMethod]
-        public void TestFail()
+        public void TestFailEmpty()
         {
+            Assert.AreEqual(_hashTable.Find("TEST"), -1);
+        }
+        
+        [TestMethod]
+        public void TestFailNotEmpty()
+        {
+            _hashTable.Put("Hello");
+            _hashTable.Put("My");
+            _hashTable.Put("Friend!");
             Assert.AreEqual(_hashTable.Find("TEST"), -1);
         }
 
