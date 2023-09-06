@@ -1,5 +1,6 @@
-﻿using System;
-using AlgorithmsDataStructures;
+﻿
+
+using System;
 
 namespace HashTableCode
 {
@@ -8,16 +9,13 @@ namespace HashTableCode
 
         static void Main(string[] args)
         {
-            var table = new HashTable(19, 3);
-            // Same
-            table.Put("Etergerb");
-            table.Put("aeqrew");
-            table.Put("aeqrew");
-            
-            table.Put("erhtrnbfnz");
-            table.Put("Test");
-            table.Put("Aleks");
-            table.Put("Rafek");
+            var dict = new Dictionary<int, string>(capacity:10);
+            dict.Add(1234234324,"zero");
+            string result;
+            dict.TryGetValue(0, out result);
+            dict.Add(1,"one");
+            dict.Add(2,"two");
+            dict.Add(12,"collision");
         }
 
     }
