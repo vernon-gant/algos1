@@ -1,120 +1,120 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace AlgorithmsDataStructures
 {
-    public class HashTable
+    public class PowerSet<T>
     {
 
-        public int size;
+        public readonly T[] slots;
 
-        public int step;
+        public int size, counter;
 
-        public int counter;
-
-        public string[] slots;
-
-        public HashTable(int sz, int stp)
+        public PowerSet()
         {
-            size = sz;
-            step = stp;
+            size = 20000;
             counter = 0;
-            slots = new string[size];
-            for (int i = 0; i < size; i++) slots[i] = null;
+            slots = new T[size];
         }
-
-        public int HashFun(string value)
-        {
-            int result = 0;
-            for (int i = 0; i < value.Length; i++)
-            {
-                result += (value[i] * (int)Math.Pow(26, value.Length - i)) % slots.Length;
-            }
-            return result % slots.Length;
-        }
-
-        public int SeekSlot(string value)
-        {
-            int idx = HashFun(value);
-            while (slots[idx] != null)
-            {
-                if (slots[idx] == value) return -1;
-
-                idx = (idx + step) % slots.Length;
-            }
-            return idx;
-        }
-
-        public int Put(string value)
-        {
-            if (counter == size || value == null) return -1;
-
-            int idx = SeekSlot(value);
-
-            if (idx == -1) return idx;
-
-            slots[idx] = value;
-            counter++;
-
-            return idx;
-        }
-
-        public int Find(string value)
-        {
-            if (value == null || counter == 0) return -1;
-
-            int slowIdx = HashFun(value);
-            int fastIdx = (slowIdx + step) % slots.Length;
-            while (slots[slowIdx] != value && slowIdx != fastIdx)
-            {
-                slowIdx = (slowIdx + step) % slots.Length;
-                fastIdx = ((fastIdx + step) % slots.Length + step) % slots.Length;
-            }
-
-            return slots[slowIdx] == value ? slowIdx : -1;
-        }
-
-    }
-
-    // наследуйте этот класс от HashTable
-    // или расширьте его методами из HashTable
-    public class PowerSet<T> : HashTable
-    {
-
-        public PowerSet() : base(20000, 1) { }
 
         public int Size()
         {
             return counter;
         }
 
+        public int Compare(T v1, T v2)
+        {
+            int result;
+            if (typeof(T) == typeof(String))
+            {
+                // trim strings and compare them
+                var str1 = v1 as string;
+                var str2 = v2 as string;
+                str1 = str1?.Trim();
+                str2 = str2?.Trim();
+                result = String.Compare(str1, str2);
+                if (result < 0) result = -1;
+                else if (result > 0) result = 1;
+                else result = 0;
+            }
+            else
+            {
+                // use object for type casting and then to int
+                var int1 = (int)(object)v1;
+                var int2 = (int)(object)v2;
+                if (int1 < int2) result = -1;
+                else if (int1 > int2) result = 1;
+                else result = 0;
+            }
+
+            return result;
+            // -1 если v1 < v2
+            // 0 если v1 == v2
+            // +1 если v1 > v2
+        }
+
+        public int Find(T value)
+        {
+            int left = 0;
+            int right = counter - 1;
+            while (left <= right)
+            {
+                var idx = (right + left) / 2;
+                var currentElement = slots[idx];
+                if (Compare(currentElement, value) == -1) left = idx + 1;
+                else if (Compare(currentElement, value) == 1) right = idx - 1;
+                else return idx;
+            }
+            return -1;
+        }
+
         public void Put(T value)
         {
-            Put(value as string);
+            if (counter != 0 && Compare(value, slots[counter - 1]) == 1)
+            {
+                slots[counter] = value;
+                counter++;
+                return;
+            }
+
+            int foundIndex = Find(value);
+            if (foundIndex != -1 || counter == size) return;
+
+            int putIdx = 0;
+            for (; Compare(slots[putIdx], value) == -1 && slots[putIdx] != null; putIdx++) { }
+            for (int i = counter; i != putIdx; i--)
+            {
+                slots[i] = slots[i - 1];
+            }
+            slots[putIdx] = value;
+            counter++;
         }
 
         public bool Get(T value)
         {
-            return Find(value as string) != -1;
+            return Find(value) != -1;
         }
 
         public bool Remove(T value)
         {
-            int idx = Find(value as string);
+            int idx = Find(value);
             if (idx == -1) return false;
 
-            slots[idx] = null;
+            counter--;
+            slots[idx] = default;
+            for (int i = idx + 1; i < counter; i++)
+            {
+                slots[i - 1] = slots[i];
+            }
             return true;
         }
 
         public PowerSet<T> Intersection(PowerSet<T> set2)
         {
             var resultSet = new PowerSet<T>();
-            foreach (var element in slots)
+            for(int i = 0; i < counter; i++)
             {
-                if (set2.Find(element) != -1) resultSet.Put(element);
+                if (set2.Find(slots[i]) != -1) resultSet.Put(slots[i]);
             }
             return resultSet;
         }
@@ -122,9 +122,22 @@ namespace AlgorithmsDataStructures
         public PowerSet<T> Union(PowerSet<T> set2)
         {
             var resultSet = new PowerSet<T>();
-            Array.Copy(slots, resultSet.slots, slots.Length);
-            foreach (var element in set2.slots)
+            int maxLength = counter > set2.counter ? counter : set2.counter;
+            int thisPointer = 0;
+            int paramPointer = 0;
+            while (thisPointer < maxLength && paramPointer < maxLength)
             {
+                T element;
+                if (slots[thisPointer] != null && (Compare(slots[thisPointer],set2.slots[paramPointer]) == -1 || set2.slots[paramPointer] == null))
+                {
+                    element = slots[thisPointer];
+                    thisPointer++;
+                }
+                else
+                {
+                    element = set2.slots[paramPointer];
+                    paramPointer++;
+                }
                 resultSet.Put(element);
             }
             return resultSet;
@@ -133,16 +146,17 @@ namespace AlgorithmsDataStructures
         public PowerSet<T> Difference(PowerSet<T> set2)
         {
             var resultSet = new PowerSet<T>();
-            foreach (var element in slots)
+            for(int i = 0; i < counter; i++)
             {
-                if (set2.Find(element) == -1) resultSet.Put(element);
+                if (set2.Find(slots[i]) == -1) resultSet.Put(slots[i]);
             }
             return resultSet;
         }
 
         public bool IsSubset(PowerSet<T> set2)
         {
-            return set2.slots.All(element => Find(element) != -1);
+            var thisWithoutSet2 = Difference(set2);
+            return set2.counter + thisWithoutSet2.counter == counter;
         }
 
     }
