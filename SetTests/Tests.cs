@@ -48,7 +48,7 @@ namespace SetTests
         {
             _set.Put("1");
             Assert.AreEqual(_set.Size(), 1);
-            _set.Remove("1");
+            Assert.IsTrue(_set.Remove("1"));
             Assert.AreEqual(_set.Size(), 0);
         }
 
@@ -61,10 +61,11 @@ namespace SetTests
             _set.Put("Dima");
             _set.Put("Test");
             Assert.AreEqual(_set.Size(), 5);
-            _set.Remove("Caesar");
-            Assert.AreEqual(_set.slots[2], "Dima");
+            Assert.IsTrue(_set.Remove("Bober"));
             Assert.AreEqual(_set.Size(), 4);
-            _set.Remove("Undefined");
+            Assert.IsNull(_set.slots[4]);
+            Assert.IsFalse(_set.Get("Bober"));
+            Assert.IsFalse(_set.Remove("Undefined"));
             Assert.AreEqual(_set.Size(), 4);
         }
 

@@ -99,12 +99,14 @@ namespace AlgorithmsDataStructures
             int idx = Find(value);
             if (idx == -1) return false;
 
-            counter--;
-            slots[idx] = default;
+            
             for (int i = idx + 1; i < counter; i++)
             {
                 slots[i - 1] = slots[i];
             }
+
+            slots[counter - 1] = default;
+            counter--;
             return true;
         }
 
