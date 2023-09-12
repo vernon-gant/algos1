@@ -1,31 +1,8 @@
-using System.Collections.Immutable;
-using System.Linq;
 using AlgorithmsDataStructures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BloomFilterTests
 {
-    [TestClass]
-    public class TestCreation
-    {
-
-        [TestMethod]
-        public void CreateMultiple32()
-        {
-            var filter = new BloomFilter(64);
-            Assert.AreEqual(filter._bitArray.Length,2);
-            Assert.IsTrue(filter._bitArray.All(element => element == 0));
-        }
-        
-        [TestMethod]
-        public void CreateNotMultiple32()
-        {
-            var filter = new BloomFilter(91);
-            Assert.AreEqual(filter._bitArray.Length,3);
-            Assert.IsTrue(filter._bitArray.All(element => element == 0));
-        }
-    }
-    
     [TestClass]
     public class TestHash
     {
@@ -75,10 +52,10 @@ namespace BloomFilterTests
             int hash2 = _filter.Hash2(input);
             _filter.Add(input);
             uint newValue = (uint)((1 << hash1) + (1 << hash2));
-            Assert.AreEqual(_filter._bitArray[0],newValue);
+            Assert.AreEqual(_filter._bitArray, newValue);
             Assert.IsTrue(_filter.IsValue(input));
         }
-        
+
         [DataTestMethod]
         [DataRow("0123456789")]
         [DataRow("1234567890")]
@@ -105,7 +82,6 @@ namespace BloomFilterTests
             _filter.Add(input);
             Assert.IsTrue(_filter.IsValue(input));
         }
-        
 
     }
 }
