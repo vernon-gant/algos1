@@ -102,13 +102,18 @@ namespace CacheCode
         private int ClearElementWithSmallestHits()
         {
             int smallestHit = int.MaxValue;
+            int smallestHitIdx = 0;
             for (int i = 0; i < _size; i++)
             {
                 if (_hits[i] == 0 && _slots[i] != null) return i;
 
-                smallestHit = smallestHit > _hits[i] ? _hits[i] : smallestHit;
+                if (_hits[i] < smallestHit)
+                {
+                    smallestHit = _hits[i];
+                    smallestHitIdx = i;
+                }
             }
-            return smallestHit;
+            return smallestHitIdx;
         }
 
         private void put(string key, T value)
@@ -121,9 +126,9 @@ namespace CacheCode
                 idx = (idx + i * step) % _size;
                 i++;
             }
+            if (_slots[idx] == null) _count++;
             _slots[idx] = key;
             _values[idx] = value;
-            _count++;
         }
 
         public bool IsFull()
