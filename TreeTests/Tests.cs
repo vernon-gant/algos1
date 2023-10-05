@@ -83,6 +83,8 @@ namespace TreeTests
             Assert.AreEqual(2, tree.Root.Children.Count);
             Assert.AreEqual(3, tree.Root.Children[0].NodeValue);
             Assert.AreEqual(4, tree.Root.Children[1].NodeValue);
+            Assert.AreEqual(0,tree.FindNodesByValue(2).Count);
+            Assert.AreEqual(6, tree.LeafCount());
         }
 
         [TestMethod]
@@ -92,12 +94,11 @@ namespace TreeTests
             tree.DeleteNode(fiveValueNode);
             Assert.AreEqual(1, tree.Root.NodeValue);
             Assert.AreEqual(3, tree.Root.Children.Count);
-            Assert.AreEqual(2, tree.Root.Children[0].NodeValue);
-            Assert.AreEqual(3, tree.Root.Children[1].NodeValue);
-            Assert.AreEqual(4, tree.Root.Children[2].NodeValue);
             Assert.AreEqual(2, tree.Root.Children[0].Children.Count);
             Assert.AreEqual(6, tree.Root.Children[0].Children[0].NodeValue);
             Assert.AreEqual(5, tree.Root.Children[0].Children[1].NodeValue);
+            Assert.AreEqual(1, tree.FindNodesByValue(5).Count);
+            Assert.AreEqual(8, tree.LeafCount());
         }
     }
 

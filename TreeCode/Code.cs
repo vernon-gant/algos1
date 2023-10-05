@@ -52,6 +52,8 @@ namespace AlgorithmsDataStructures2
 
         public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
         {
+            if (NodeToDelete.Parent == null)
+                return;
             NodeToDelete.Parent.Children.Remove(NodeToDelete);
         }
 
