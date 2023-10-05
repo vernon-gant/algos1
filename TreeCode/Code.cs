@@ -131,7 +131,7 @@ namespace AlgorithmsDataStructures2
 
         private int leafCount(SimpleTreeNode<T> node)
         {
-            if (node.Children == null)
+            if (node.Children == null || node.Children.Count == 0)
                 return 1;
 
             int counter = 0;
