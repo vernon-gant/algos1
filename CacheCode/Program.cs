@@ -8,17 +8,6 @@ namespace CacheCode
         static void Main(string[] args)
         {
             var cache = new NativeCache<string>(8);
-            cache.Put("kok","ses");
-            cache.Put("kek","ses");
-            cache.Put("kak","ses");
-            cache.Put("kbk","ses");
-            cache.Put("ktk","ses");
-            cache.Put("sfregerdgrg","ses");
-            cache.Put("ergerg","ses");
-            cache.Put("ergergerg","ses");
-            cache.Put("cvbbf","ses");
-            cache.Put("lihkuihjkh","ses");
-            cache.Put("uyuijnnn","ses");
             cache.Get("ktk");
             cache.Get("ktk");
             cache.Get("ktk");
@@ -35,7 +24,18 @@ namespace CacheCode
             cache.Get("cvbbf");
             cache.Get("lihkuihjkh");
             cache.Get("uyuijnnn");
-            cache.Put("kokozavr","test");
+            
+            Console.WriteLine(cache.hash1("alpha"));
+            Console.WriteLine(cache.hash1("charlie"));
+            Console.WriteLine(cache.hash1("golf"));
+            Console.WriteLine(cache.hash1("india"));
+            Console.WriteLine(cache.hash1("kilo"));
+            Console.WriteLine(cache.hash1("sierra"));
+            Console.WriteLine(cache.hash1("whiskey"));
+            Console.WriteLine(cache.hash1("echo"));
+            Console.WriteLine(cache.hash1("quebec"));
+            Console.WriteLine(cache.hash1("uniform"));
+            Console.WriteLine(cache.hash1("mike"));
         }
 
     }
