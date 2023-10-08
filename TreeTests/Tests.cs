@@ -75,7 +75,7 @@ namespace TreeTests
         }
 
         [TestMethod]
-        public void SecondLevel()
+        public void FirstLevel()
         {
             var twoValueNode = tree.Root.Children[0];
             tree.DeleteNode(twoValueNode);
@@ -83,21 +83,48 @@ namespace TreeTests
             Assert.AreEqual(2, tree.Root.Children.Count);
             Assert.AreEqual(3, tree.Root.Children[0].NodeValue);
             Assert.AreEqual(4, tree.Root.Children[1].NodeValue);
+            Assert.AreEqual(0,tree.FindNodesByValue(2).Count);
+            Assert.AreEqual(6, tree.LeafCount());
         }
 
         [TestMethod]
-        public void ThirdLevel()
+        public void SecondLevel()
         {
             var fiveValueNode = tree.Root.Children[0].Children[0];
             tree.DeleteNode(fiveValueNode);
             Assert.AreEqual(1, tree.Root.NodeValue);
             Assert.AreEqual(3, tree.Root.Children.Count);
-            Assert.AreEqual(2, tree.Root.Children[0].NodeValue);
-            Assert.AreEqual(3, tree.Root.Children[1].NodeValue);
-            Assert.AreEqual(4, tree.Root.Children[2].NodeValue);
             Assert.AreEqual(2, tree.Root.Children[0].Children.Count);
             Assert.AreEqual(6, tree.Root.Children[0].Children[0].NodeValue);
             Assert.AreEqual(5, tree.Root.Children[0].Children[1].NodeValue);
+            Assert.AreEqual(1, tree.FindNodesByValue(5).Count);
+            Assert.AreEqual(8, tree.LeafCount());
+        }
+
+        [TestMethod]
+        public void AllFirst()
+        {
+            var twoValueNode = tree.Root.Children[0];
+            tree.DeleteNode(twoValueNode);
+            Assert.AreEqual(1, tree.Root.NodeValue);
+            Assert.AreEqual(2, tree.Root.Children.Count);
+            Assert.AreEqual(3, tree.Root.Children[0].NodeValue);
+            Assert.AreEqual(4, tree.Root.Children[1].NodeValue);
+            Assert.AreEqual(0,tree.FindNodesByValue(2).Count);
+            Assert.AreEqual(6, tree.LeafCount());
+            var threeValueNode = tree.Root.Children[0];
+            tree.DeleteNode(threeValueNode);
+            Assert.AreEqual(1, tree.Root.NodeValue);
+            Assert.AreEqual(1, tree.Root.Children.Count);
+            Assert.AreEqual(4, tree.Root.Children[0].NodeValue);
+            Assert.AreEqual(0,tree.FindNodesByValue(3).Count);
+            Assert.AreEqual(3, tree.LeafCount());
+            var fourValueNode = tree.Root.Children[0];
+            tree.DeleteNode(fourValueNode);
+            Assert.AreEqual(1, tree.Root.NodeValue);
+            Assert.AreEqual(0, tree.Root.Children.Count);
+            Assert.AreEqual(0,tree.FindNodesByValue(4).Count);
+            Assert.AreEqual(1, tree.LeafCount());
         }
     }
 
