@@ -142,6 +142,22 @@ namespace AlgorithmsDataStructures2
             return counter;
         }
 
+        public void ShowNodesLevel()
+        {
+            showNodesLevel(Root, 0);
+        }
+
+        private void showNodesLevel(SimpleTreeNode<T> node, int level)
+        {
+            Console.WriteLine($"Node: {node.NodeValue}, Level: {level}");
+
+            if (node.Children != null && node.Children.Count > 0)
+                foreach (var child in node.Children)
+                {
+                    showNodesLevel(child, level + 1);
+                }
+        }
+
     }
 
 }
