@@ -5,13 +5,15 @@ namespace AlgorithmsDataStructures2
     public class BSTNode
     {
         public int NodeKey;
+        public int NodeValue;
         public BSTNode Parent;
         public BSTNode LeftChild;
         public BSTNode RightChild;
 
-        public BSTNode(int key, BSTNode parent)
+        public BSTNode(int key, int value, BSTNode parent)
         {
             NodeKey = key;
+            NodeValue = value;
             Parent = parent;
             LeftChild = null;
             RightChild = null;
@@ -20,7 +22,7 @@ namespace AlgorithmsDataStructures2
 
     public class DummyNode : BSTNode
     {
-        public DummyNode(BSTNode root) : base(0, null)
+        public DummyNode(BSTNode root) : base(0,0, null)
         {
             RightChild = root;
         }
@@ -72,14 +74,14 @@ namespace AlgorithmsDataStructures2
             return findNodeByKey(key, currentNode.RightChild, currentNode);
         }
 
-        public bool AddKey(int key)
+        public bool AddKey(int key, int value)
         {
             var foundNode = FindNodeByKey(key);
 
             if (foundNode.NodeHasKey)
                 return false;
 
-            var newNode = new BSTNode(key, foundNode.Node);
+            var newNode = new BSTNode(key, value, foundNode.Node);
 
             if (foundNode.Node == null)
                 Root = newNode;

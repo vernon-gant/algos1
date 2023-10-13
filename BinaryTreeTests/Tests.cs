@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 using AlgorithmsDataStructures2;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -804,25 +802,25 @@ namespace BinaryTreeTests
 
         public static BST SeedManyW()
         {
-            var root = new BSTNode(8, null);
+            var root = new BSTNode(8, 8, null);
             var tree = new BST(root);
 
-            tree.AddKey(4);
-            tree.AddKey(12);
+            tree.AddKey(4, 4);
+            tree.AddKey(12, 12);
 
-            tree.AddKey(2);
-            tree.AddKey(6);
-            tree.AddKey(1);
-            tree.AddKey(3);
-            tree.AddKey(5);
-            tree.AddKey(7);
+            tree.AddKey(2, 2);
+            tree.AddKey(6, 6);
+            tree.AddKey(1, 1);
+            tree.AddKey(3, 3);
+            tree.AddKey(5, 5);
+            tree.AddKey(7, 7);
 
-            tree.AddKey(10);
-            tree.AddKey(14);
-            tree.AddKey(9);
-            tree.AddKey(11);
-            tree.AddKey(13);
-            tree.AddKey(15);
+            tree.AddKey(10, 10);
+            tree.AddKey(14, 14);
+            tree.AddKey(9, 9);
+            tree.AddKey(11, 11);
+            tree.AddKey(13, 13);
+            tree.AddKey(15, 15);
 
             return tree;
         }
@@ -843,12 +841,12 @@ namespace BinaryTreeTests
         public static BST SeedManySecondW()
         {
             var tree = new BST(null);
-            tree.AddKey(100);
-            tree.AddKey(50);
-            tree.AddKey(1);
-            tree.AddKey(60);
-            tree.AddKey(55);
-            tree.AddKey(70);
+            tree.AddKey(100,100);
+            tree.AddKey(50,50);
+            tree.AddKey(1,1);
+            tree.AddKey(60,60);
+            tree.AddKey(55,55);
+            tree.AddKey(70,70);
 
             return tree;
         }
