@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace AlgorithmsDataStructures2
@@ -238,20 +239,21 @@ namespace AlgorithmsDataStructures2
             var nodeList = new List<BSTNode<T>>();
             var stack = new Stack<BSTNode<T>>();
             var currentNode = Root;
+            BSTNode<T> currentParent = null;
 
             while (currentNode != null || stack.Count > 0)
             {
                 while (currentNode != null)
                 {
                     stack.Push(currentNode);
-                    stack.Push(currentNode.RightChild);
                     currentNode = currentNode.LeftChild;
                 }
 
                 currentNode = stack.Pop();
                 nodeList.Add(currentNode);
 
-                currentNode = stack.Pop();
+                if (stack.Count == 0) break;
+                currentNode = stack.Peek().RightChild != currentNode ? stack.Peek().RightChild : null;
             }
 
             return nodeList;
@@ -263,8 +265,8 @@ namespace AlgorithmsDataStructures2
 
             var nodeList = new List<BSTNode<T>>();
             nodeList.Add(currentNode);
-            nodeList.AddRange(PostOrderRecursion(currentNode.LeftChild));
-            nodeList.AddRange(PostOrderRecursion(currentNode.RightChild));
+            nodeList.AddRange(PreOrderRecursion(currentNode.LeftChild));
+            nodeList.AddRange(PreOrderRecursion(currentNode.RightChild));
 
             return nodeList;
         }
@@ -275,8 +277,37 @@ namespace AlgorithmsDataStructures2
             var stack = new Stack<BSTNode<T>>();
             var currentNode = Root;
 
+            while (currentNode != null || stack.Count > 0)
+            {
+                while (currentNode != null)
+                {
+                    nodeList.Add(currentNode);
+                    stack.Push(currentNode.RightChild);
+                    currentNode = currentNode.LeftChild;
+                }
+
+                currentNode = stack.Pop();
+            }
 
             return nodeList;
+        }
+
+        public List<BSTNode<T>> WideAllNodes()
+        {
+            var nodesList = new List<BSTNode<T>>();
+            var deque = new LinkedList<BSTNode<T>>();
+            deque.AddFirst(Root);
+
+            while (deque.Count > 0)
+            {
+                var currentNode = deque.First!.Value;
+                deque.RemoveFirst();
+                nodesList.Add(currentNode);
+                if (currentNode.LeftChild != null) deque.AddLast(currentNode.LeftChild);
+                if (currentNode.RightChild != null) deque.AddLast(currentNode.RightChild);
+            }
+
+            return nodesList;
         }
     }
 }
