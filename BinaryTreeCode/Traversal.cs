@@ -1,40 +1,36 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace AlgorithmsDataStructures2
 {
-    public class BSTNode<T>
+    public class BSTNode
     {
         public int NodeKey;
-        public T NodeValue;
-        public BSTNode<T> Parent;
-        public BSTNode<T> LeftChild;
-        public BSTNode<T> RightChild;
+        public BSTNode Parent;
+        public BSTNode LeftChild;
+        public BSTNode RightChild;
 
-        public BSTNode(int key, T val, BSTNode<T> parent)
+        public BSTNode(int key, BSTNode parent)
         {
             NodeKey = key;
-            NodeValue = val;
             Parent = parent;
             LeftChild = null;
             RightChild = null;
         }
     }
 
-    public class DummyNode<T> : BSTNode<T>
+    public class DummyNode : BSTNode
     {
-        public DummyNode(BSTNode<T> root) : base(0, default(T), null)
+        public DummyNode(BSTNode root) : base(0, null)
         {
             RightChild = root;
         }
     }
 
 
-    public class BSTFind<T>
+    public class BSTFind
     {
         // null если в дереве вообще нету узлов
-        public BSTNode<T> Node;
+        public BSTNode Node;
 
         // true если узел найден
         public bool NodeHasKey;
@@ -48,27 +44,27 @@ namespace AlgorithmsDataStructures2
         }
     }
 
-    public class BST<T>
+    public class BST
     {
-        BSTNode<T> Root;
+        BSTNode Root;
 
-        public BST(BSTNode<T> node)
+        public BST(BSTNode node)
         {
             Root = node;
         }
 
-        public BSTFind<T> FindNodeByKey(int key)
+        public BSTFind FindNodeByKey(int key)
         {
             return findNodeByKey(key, Root, null);
         }
 
-        private BSTFind<T> findNodeByKey(int key, BSTNode<T> currentNode, BSTNode<T> parentNode)
+        private BSTFind findNodeByKey(int key, BSTNode currentNode, BSTNode parentNode)
         {
             if (currentNode == null)
-                return new BSTFind<T> { Node = parentNode, NodeHasKey = false, ToLeft = parentNode != null && parentNode.NodeKey > key };
+                return new BSTFind { Node = parentNode, NodeHasKey = false, ToLeft = parentNode != null && parentNode.NodeKey > key };
 
             if (currentNode.NodeKey == key)
-                return new BSTFind<T> { Node = currentNode, NodeHasKey = true };
+                return new BSTFind { Node = currentNode, NodeHasKey = true };
 
             if (key < currentNode.NodeKey)
                 return findNodeByKey(key, currentNode.LeftChild, currentNode);
@@ -76,14 +72,14 @@ namespace AlgorithmsDataStructures2
             return findNodeByKey(key, currentNode.RightChild, currentNode);
         }
 
-        public bool AddKeyValue(int key, T val)
+        public bool AddKey(int key)
         {
             var foundNode = FindNodeByKey(key);
 
             if (foundNode.NodeHasKey)
                 return false;
 
-            var newNode = new BSTNode<T>(key, val, foundNode.Node);
+            var newNode = new BSTNode(key, foundNode.Node);
 
             if (foundNode.Node == null)
                 Root = newNode;
@@ -95,12 +91,12 @@ namespace AlgorithmsDataStructures2
             return true;
         }
 
-        public BSTNode<T> FinMinMax(BSTNode<T> FromNode, bool FindMax)
+        public BSTNode FinMinMax(BSTNode FromNode, bool FindMax)
         {
             return finMinMax(FromNode, FromNode, FindMax);
         }
 
-        private BSTNode<T> finMinMax(BSTNode<T> FromNode, BSTNode<T> ParentNode, bool FindMax)
+        private BSTNode finMinMax(BSTNode FromNode, BSTNode ParentNode, bool FindMax)
         {
             if (FromNode == null)
                 return ParentNode;
@@ -116,7 +112,7 @@ namespace AlgorithmsDataStructures2
 
             var nodeToDelete = foundNode.Node;
 
-            if (nodeToDelete == Root) nodeToDelete.Parent = new DummyNode<T>(nodeToDelete);
+            if (nodeToDelete == Root) nodeToDelete.Parent = new DummyNode(nodeToDelete);
 
             if (nodeToDelete.RightChild == null && nodeToDelete.LeftChild == null)
             {
@@ -142,14 +138,14 @@ namespace AlgorithmsDataStructures2
                 nodeToDelete.Parent.RightChild = nodeToDelete == nodeToDelete.Parent.RightChild ? minNode : nodeToDelete.Parent.RightChild;
                 nodeToDelete.Parent.LeftChild = nodeToDelete == nodeToDelete.Parent.LeftChild ? minNode : nodeToDelete.Parent.LeftChild;
 
-                minNode.Parent = nodeToDelete.Parent is DummyNode<T> ? null : nodeToDelete.Parent;
+                minNode.Parent = nodeToDelete.Parent is DummyNode ? null : nodeToDelete.Parent;
                 minNode.LeftChild = nodeToDelete.LeftChild;
                 if (minNode.LeftChild != null) minNode.LeftChild.Parent = minNode;
                 minNode.RightChild ??= nodeToDelete.RightChild;
                 if (minNode.RightChild != null) minNode.RightChild.Parent = minNode;
             }
 
-            if (nodeToDelete.Parent is DummyNode<T>) Root = nodeToDelete.Parent.RightChild;
+            if (nodeToDelete.Parent is DummyNode) Root = nodeToDelete.Parent.RightChild;
 
             return true;
         }
@@ -159,14 +155,14 @@ namespace AlgorithmsDataStructures2
             return count(Root);
         }
 
-        private int count(BSTNode<T> node)
+        private int count(BSTNode node)
         {
             if (node == null) return 0;
 
             return 1 + count(node.RightChild) + count(node.LeftChild);
         }
 
-        public List<BSTNode<T>> DeepAllNodes(int mode)
+        public List<BSTNode> DeepAllNodes(int mode)
         {
             return mode switch
             {
@@ -176,7 +172,7 @@ namespace AlgorithmsDataStructures2
             };
         }
 
-        public List<BSTNode<T>> DeepAllNodesStack(int mode)
+        public List<BSTNode> DeepAllNodesStack(int mode)
         {
             return mode switch
             {
@@ -186,11 +182,11 @@ namespace AlgorithmsDataStructures2
             };
         }
 
-        private List<BSTNode<T>> InOrderRecursion(BSTNode<T> currentNode)
+        private List<BSTNode> InOrderRecursion(BSTNode currentNode)
         {
-            if (currentNode == null) return new List<BSTNode<T>>();
+            if (currentNode == null) return new List<BSTNode>();
 
-            var nodeList = new List<BSTNode<T>>();
+            var nodeList = new List<BSTNode>();
             nodeList.AddRange(InOrderRecursion(currentNode.LeftChild));
             nodeList.Add(currentNode);
             nodeList.AddRange(InOrderRecursion(currentNode.RightChild));
@@ -198,10 +194,10 @@ namespace AlgorithmsDataStructures2
             return nodeList;
         }
 
-        private List<BSTNode<T>> InOrderStack()
+        private List<BSTNode> InOrderStack()
         {
-            var nodeList = new List<BSTNode<T>>();
-            var stack = new Stack<BSTNode<T>>();
+            var nodeList = new List<BSTNode>();
+            var stack = new Stack<BSTNode>();
             var currentNode = Root;
 
             while (currentNode != null || stack.Count > 0)
@@ -221,11 +217,11 @@ namespace AlgorithmsDataStructures2
             return nodeList;
         }
 
-        private List<BSTNode<T>> PostOrderRecursion(BSTNode<T> currentNode)
+        private List<BSTNode> PostOrderRecursion(BSTNode currentNode)
         {
-            if (currentNode == null) return new List<BSTNode<T>>();
+            if (currentNode == null) return new List<BSTNode>();
 
-            var nodeList = new List<BSTNode<T>>();
+            var nodeList = new List<BSTNode>();
             nodeList.AddRange(PostOrderRecursion(currentNode.LeftChild));
             nodeList.AddRange(PostOrderRecursion(currentNode.RightChild));
             nodeList.Add(currentNode);
@@ -233,10 +229,10 @@ namespace AlgorithmsDataStructures2
             return nodeList;
         }
 
-        private List<BSTNode<T>> PostOrderStack()
+        private List<BSTNode> PostOrderStack()
         {
-            var nodeList = new List<BSTNode<T>>();
-            var stack = new Stack<BSTNode<T>>();
+            var nodeList = new List<BSTNode>();
+            var stack = new Stack<BSTNode>();
             var currentNode = Root;
 
             while (currentNode != null || stack.Count > 0)
@@ -251,17 +247,18 @@ namespace AlgorithmsDataStructures2
                 nodeList.Add(currentNode);
 
                 if (stack.Count == 0) break;
+
                 currentNode = stack.Peek().RightChild != currentNode ? stack.Peek().RightChild : null;
             }
 
             return nodeList;
         }
 
-        private List<BSTNode<T>> PreOrderRecursion(BSTNode<T> currentNode)
+        private List<BSTNode> PreOrderRecursion(BSTNode currentNode)
         {
-            if (currentNode == null) return new List<BSTNode<T>>();
+            if (currentNode == null) return new List<BSTNode>();
 
-            var nodeList = new List<BSTNode<T>>();
+            var nodeList = new List<BSTNode>();
             nodeList.Add(currentNode);
             nodeList.AddRange(PreOrderRecursion(currentNode.LeftChild));
             nodeList.AddRange(PreOrderRecursion(currentNode.RightChild));
@@ -269,10 +266,10 @@ namespace AlgorithmsDataStructures2
             return nodeList;
         }
 
-        private List<BSTNode<T>> PreOrderStack()
+        private List<BSTNode> PreOrderStack()
         {
-            var nodeList = new List<BSTNode<T>>();
-            var stack = new Stack<BSTNode<T>>();
+            var nodeList = new List<BSTNode>();
+            var stack = new Stack<BSTNode>();
             var currentNode = Root;
 
             while (currentNode != null || stack.Count > 0)
@@ -290,10 +287,10 @@ namespace AlgorithmsDataStructures2
             return nodeList;
         }
 
-        public List<BSTNode<T>> WideAllNodes()
+        public List<BSTNode> WideAllNodes()
         {
-            var nodesList = new List<BSTNode<T>>();
-            var deque = new LinkedList<BSTNode<T>>();
+            var nodesList = new List<BSTNode>();
+            var deque = new LinkedList<BSTNode>();
             deque.AddFirst(Root);
 
             while (deque.Count > 0)
