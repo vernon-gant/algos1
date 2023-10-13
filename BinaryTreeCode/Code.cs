@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace AlgorithmsDataStructures2
 {
@@ -163,6 +164,119 @@ namespace AlgorithmsDataStructures2
             if (node == null) return 0;
 
             return 1 + count(node.RightChild) + count(node.LeftChild);
+        }
+
+        public List<BSTNode<T>> DeepAllNodes(int mode)
+        {
+            return mode switch
+            {
+                0 => InOrderRecursion(Root),
+                1 => PostOrderRecursion(Root),
+                _ => PreOrderRecursion(Root)
+            };
+        }
+
+        public List<BSTNode<T>> DeepAllNodesStack(int mode)
+        {
+            return mode switch
+            {
+                0 => InOrderStack(),
+                1 => PostOrderStack(),
+                _ => PreOrderStack()
+            };
+        }
+
+        private List<BSTNode<T>> InOrderRecursion(BSTNode<T> currentNode)
+        {
+            if (currentNode == null) return new List<BSTNode<T>>();
+
+            var nodeList = new List<BSTNode<T>>();
+            nodeList.AddRange(InOrderRecursion(currentNode.LeftChild));
+            nodeList.Add(currentNode);
+            nodeList.AddRange(InOrderRecursion(currentNode.RightChild));
+
+            return nodeList;
+        }
+
+        private List<BSTNode<T>> InOrderStack()
+        {
+            var nodeList = new List<BSTNode<T>>();
+            var stack = new Stack<BSTNode<T>>();
+            var currentNode = Root;
+
+            while (currentNode != null || stack.Count > 0)
+            {
+                while (currentNode != null)
+                {
+                    stack.Push(currentNode);
+                    currentNode = currentNode.LeftChild;
+                }
+
+                currentNode = stack.Pop();
+                nodeList.Add(currentNode);
+
+                currentNode = currentNode.RightChild;
+            }
+
+            return nodeList;
+        }
+
+        private List<BSTNode<T>> PostOrderRecursion(BSTNode<T> currentNode)
+        {
+            if (currentNode == null) return new List<BSTNode<T>>();
+
+            var nodeList = new List<BSTNode<T>>();
+            nodeList.AddRange(PostOrderRecursion(currentNode.LeftChild));
+            nodeList.AddRange(PostOrderRecursion(currentNode.RightChild));
+            nodeList.Add(currentNode);
+
+            return nodeList;
+        }
+
+        private List<BSTNode<T>> PostOrderStack()
+        {
+            var nodeList = new List<BSTNode<T>>();
+            var stack = new Stack<BSTNode<T>>();
+            var currentNode = Root;
+
+            while (currentNode != null || stack.Count > 0)
+            {
+                while (currentNode != null)
+                {
+                    stack.Push(currentNode);
+                    stack.Push(currentNode.RightChild);
+                    currentNode = currentNode.LeftChild;
+                }
+
+                currentNode = stack.Pop();
+                nodeList.Add(currentNode);
+
+                currentNode = stack.Pop();
+            }
+
+            return nodeList;
+        }
+
+        private List<BSTNode<T>> PreOrderRecursion(BSTNode<T> currentNode)
+        {
+            if (currentNode == null) return new List<BSTNode<T>>();
+
+            var nodeList = new List<BSTNode<T>>();
+            nodeList.Add(currentNode);
+            nodeList.AddRange(PostOrderRecursion(currentNode.LeftChild));
+            nodeList.AddRange(PostOrderRecursion(currentNode.RightChild));
+
+            return nodeList;
+        }
+
+        private List<BSTNode<T>> PreOrderStack()
+        {
+            var nodeList = new List<BSTNode<T>>();
+            var stack = new Stack<BSTNode<T>>();
+            var currentNode = Root;
+
+
+            return nodeList;
         }
     }
 }

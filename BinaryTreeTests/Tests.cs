@@ -343,6 +343,108 @@ namespace BinaryTreeTests
         }
     }
 
+    [TestClass]
+    public class TestTraversal
+    {
+
+        private BST<int> _tree = TreeSeeder.SeedMany();
+
+        [TestMethod]
+        public void InOrderRecursion()
+        {
+            var resultList = _tree.DeepAllNodes(0);
+            Assert.AreEqual(15, resultList.Count);
+
+            for (int i = 1; i <= 15; i++)
+            {
+                Assert.AreEqual(resultList[i - 1].NodeKey, i);
+            }
+        }
+
+
+        [TestMethod]
+        public void InOrderStack()
+        {
+            var resultList = _tree.DeepAllNodesStack(0);
+            Assert.AreEqual(15, resultList.Count);
+
+            for (int i = 1; i <= 15; i++)
+            {
+                Assert.AreEqual(resultList[i - 1].NodeKey, i);
+            }
+        }
+
+        [TestMethod]
+        public void PostOrderRecursion()
+        {
+            var resultList = _tree.DeepAllNodes(1);
+            Assert.AreEqual(15, resultList.Count);
+
+            Assert.AreEqual(resultList[0].NodeKey, 1);
+            Assert.AreEqual(resultList[1].NodeKey, 3);
+            Assert.AreEqual(resultList[2].NodeKey, 2);
+            Assert.AreEqual(resultList[3].NodeKey, 5);
+            Assert.AreEqual(resultList[4].NodeKey, 7);
+            Assert.AreEqual(resultList[5].NodeKey, 6);
+            Assert.AreEqual(resultList[6].NodeKey, 4);
+            Assert.AreEqual(resultList[7].NodeKey, 9);
+            Assert.AreEqual(resultList[8].NodeKey, 11);
+            Assert.AreEqual(resultList[9].NodeKey, 10);
+            Assert.AreEqual(resultList[10].NodeKey, 13);
+            Assert.AreEqual(resultList[11].NodeKey, 15);
+            Assert.AreEqual(resultList[12].NodeKey, 14);
+            Assert.AreEqual(resultList[13].NodeKey, 12);
+            Assert.AreEqual(resultList[14].NodeKey, 8);
+        }
+
+        [TestMethod]
+        public void PostOrderStack()
+        {
+            var resultList = _tree.DeepAllNodesStack(1);
+            Assert.AreEqual(15, resultList.Count);
+
+            Assert.AreEqual(resultList[0].NodeKey, 1);
+            Assert.AreEqual(resultList[1].NodeKey, 3);
+            Assert.AreEqual(resultList[2].NodeKey, 2);
+            Assert.AreEqual(resultList[3].NodeKey, 5);
+            Assert.AreEqual(resultList[4].NodeKey, 7);
+            Assert.AreEqual(resultList[5].NodeKey, 6);
+            Assert.AreEqual(resultList[6].NodeKey, 4);
+            Assert.AreEqual(resultList[7].NodeKey, 9);
+            Assert.AreEqual(resultList[8].NodeKey, 11);
+            Assert.AreEqual(resultList[9].NodeKey, 10);
+            Assert.AreEqual(resultList[10].NodeKey, 13);
+            Assert.AreEqual(resultList[11].NodeKey, 15);
+            Assert.AreEqual(resultList[12].NodeKey, 14);
+            Assert.AreEqual(resultList[13].NodeKey, 12);
+            Assert.AreEqual(resultList[14].NodeKey, 8);
+        }
+
+        [TestMethod]
+        public void PreOrderRecursion()
+        {
+            var resultList = _tree.DeepAllNodes(2);
+            Assert.AreEqual(15, resultList.Count);
+
+            Assert.AreEqual(resultList[0].NodeKey, 8);
+            Assert.AreEqual(resultList[1].NodeKey, 4);
+            Assert.AreEqual(resultList[2].NodeKey, 2);
+            Assert.AreEqual(resultList[3].NodeKey, 1);
+            Assert.AreEqual(resultList[4].NodeKey, 3);
+            Assert.AreEqual(resultList[5].NodeKey, 6);
+            Assert.AreEqual(resultList[6].NodeKey, 5);
+            Assert.AreEqual(resultList[7].NodeKey, 7);
+            Assert.AreEqual(resultList[8].NodeKey, 12);
+            Assert.AreEqual(resultList[9].NodeKey, 10);
+            Assert.AreEqual(resultList[10].NodeKey, 9);
+            Assert.AreEqual(resultList[11].NodeKey, 11);
+            Assert.AreEqual(resultList[12].NodeKey, 14);
+            Assert.AreEqual(resultList[13].NodeKey, 13);
+            Assert.AreEqual(resultList[14].NodeKey, 15);
+        }
+
+    }
+
     public static class TreeSeeder
     {
         public static BST<int> SeedMany()
