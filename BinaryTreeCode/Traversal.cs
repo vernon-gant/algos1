@@ -10,10 +10,10 @@ namespace AlgorithmsDataStructures2
         public BSTNode LeftChild;
         public BSTNode RightChild;
 
-        public BSTNode(int key, int value, BSTNode parent)
+        public BSTNode(int key, int val, BSTNode parent)
         {
             NodeKey = key;
-            NodeValue = value;
+            NodeValue = val;
             Parent = parent;
             LeftChild = null;
             RightChild = null;
@@ -74,14 +74,14 @@ namespace AlgorithmsDataStructures2
             return findNodeByKey(key, currentNode.RightChild, currentNode);
         }
 
-        public bool AddKey(int key, int value)
+        public bool AddKeyValue(int key, int val)
         {
             var foundNode = FindNodeByKey(key);
 
             if (foundNode.NodeHasKey)
                 return false;
 
-            var newNode = new BSTNode(key, value, foundNode.Node);
+            var newNode = new BSTNode(key, val, foundNode.Node);
 
             if (foundNode.Node == null)
                 Root = newNode;

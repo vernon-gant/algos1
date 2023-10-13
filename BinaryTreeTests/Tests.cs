@@ -805,22 +805,22 @@ namespace BinaryTreeTests
             var root = new BSTNode(8, 8, null);
             var tree = new BST(root);
 
-            tree.AddKey(4, 4);
-            tree.AddKey(12, 12);
+            tree.AddKeyValue(4, 4);
+            tree.AddKeyValue(12, 12);
 
-            tree.AddKey(2, 2);
-            tree.AddKey(6, 6);
-            tree.AddKey(1, 1);
-            tree.AddKey(3, 3);
-            tree.AddKey(5, 5);
-            tree.AddKey(7, 7);
+            tree.AddKeyValue(2, 2);
+            tree.AddKeyValue(6, 6);
+            tree.AddKeyValue(1, 1);
+            tree.AddKeyValue(3, 3);
+            tree.AddKeyValue(5, 5);
+            tree.AddKeyValue(7, 7);
 
-            tree.AddKey(10, 10);
-            tree.AddKey(14, 14);
-            tree.AddKey(9, 9);
-            tree.AddKey(11, 11);
-            tree.AddKey(13, 13);
-            tree.AddKey(15, 15);
+            tree.AddKeyValue(10, 10);
+            tree.AddKeyValue(14, 14);
+            tree.AddKeyValue(9, 9);
+            tree.AddKeyValue(11, 11);
+            tree.AddKeyValue(13, 13);
+            tree.AddKeyValue(15, 15);
 
             return tree;
         }
@@ -841,12 +841,12 @@ namespace BinaryTreeTests
         public static BST SeedManySecondW()
         {
             var tree = new BST(null);
-            tree.AddKey(100,100);
-            tree.AddKey(50,50);
-            tree.AddKey(1,1);
-            tree.AddKey(60,60);
-            tree.AddKey(55,55);
-            tree.AddKey(70,70);
+            tree.AddKeyValue(100,100);
+            tree.AddKeyValue(50,50);
+            tree.AddKeyValue(1,1);
+            tree.AddKeyValue(60,60);
+            tree.AddKeyValue(55,55);
+            tree.AddKeyValue(70,70);
 
             return tree;
         }
