@@ -33,7 +33,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void Many()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             BSTFind<int> found = _tree.FindNodeByKey(15);
             Assert.IsTrue(found.NodeHasKey);
             Assert.IsNotNull(found.Node);
@@ -44,7 +44,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void AddLeft()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             BSTFind<int> found = _tree.FindNodeByKey(-1);
             Assert.IsFalse(found.NodeHasKey);
             Assert.IsNotNull(found.Node);
@@ -55,7 +55,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void AddRight()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             BSTFind<int> found = _tree.FindNodeByKey(16);
             Assert.IsFalse(found.NodeHasKey);
             Assert.IsNotNull(found.Node);
@@ -113,7 +113,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void AddThree()
         {
-            _tree = TreeSeeder.SeedThreeGenericInt();
+            _tree = TreeSeeder.SeedThreeNodesGeneric();
             Assert.AreEqual(3, _tree.Count());
             BSTFind<int> found = _tree.FindNodeByKey(1);
             Assert.IsTrue(found.NodeHasKey);
@@ -160,7 +160,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void FromRootMin()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             BSTNode<int> root = _tree.FindNodeByKey(8).Node;
             BSTNode<int> found = _tree.FinMinMax(root, false);
             Assert.IsNotNull(found);
@@ -170,7 +170,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void FromRootMax()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             BSTNode<int> root = _tree.FindNodeByKey(8).Node;
             BSTNode<int> found = _tree.FinMinMax(root, true);
             Assert.IsNotNull(found);
@@ -180,7 +180,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void FromNonRootMin()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             BSTNode<int> root = _tree.FindNodeByKey(12).Node;
             BSTNode<int> found = _tree.FinMinMax(root, false);
             Assert.IsNotNull(found);
@@ -190,7 +190,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void FromNonRootMax()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             BSTNode<int> root = _tree.FindNodeByKey(4).Node;
             BSTNode<int> found = _tree.FinMinMax(root, true);
             Assert.IsNotNull(found);
@@ -213,7 +213,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void Unexisting()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             Assert.IsFalse(_tree.DeleteNodeByKey(0));
             Assert.IsFalse(_tree.DeleteNodeByKey(16));
             Assert.AreEqual(15, _tree.Count());
@@ -234,7 +234,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void RootWhenTreeOfThreeNodes()
         {
-            _tree = TreeSeeder.SeedThreeGenericInt();
+            _tree = TreeSeeder.SeedThreeNodesGeneric();
             Assert.IsTrue(_tree.DeleteNodeByKey(2));
             Assert.AreEqual(2, _tree.Count());
             BSTFind<int> found = _tree.FindNodeByKey(2);
@@ -251,7 +251,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void RootWhenFullTree()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             Assert.IsTrue(_tree.DeleteNodeByKey(8));
             Assert.AreEqual(14, _tree.Count());
             BSTFind<int> found = _tree.FindNodeByKey(8);
@@ -268,7 +268,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void FullRightPart()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             Assert.IsTrue(_tree.DeleteNodeByKey(12));
             Assert.IsTrue(_tree.DeleteNodeByKey(14));
             Assert.IsTrue(_tree.DeleteNodeByKey(15));
@@ -305,7 +305,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void Leaf()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             Assert.IsTrue(_tree.DeleteNodeByKey(1));
             Assert.AreEqual(14, _tree.Count());
             BSTFind<int> found = _tree.FindNodeByKey(1);
@@ -322,7 +322,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void NodeWithOneChild()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             Assert.IsTrue(_tree.DeleteNodeByKey(2));
             Assert.AreEqual(14, _tree.Count());
             BSTNode<int> threeNode = _tree.FindNodeByKey(3).Node;
@@ -352,7 +352,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void InOrderRecursion()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             List<BSTNode<int>> inOrderNodes = _tree.DeepAllNodes(0);
             Assert.AreEqual(15, inOrderNodes.Count);
 
@@ -365,7 +365,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void InOrderStack()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             List<BSTNode<int>> inOrderNodes = _tree.DeepAllNodesStack(0);
             Assert.AreEqual(15, inOrderNodes.Count);
 
@@ -378,7 +378,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void InOrderStackSecond()
         {
-            _tree = TreeSeeder.SeedManySecondGenericInt();
+            _tree = TreeSeeder.SeedRandomOrderGeneric();
             List<BSTNode<int>> inOrderNodes = _tree.DeepAllNodesStack(0);
 
             Assert.AreEqual(6, inOrderNodes.Count);
@@ -394,7 +394,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PostOrderRecursion()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             List<BSTNode<int>> postOrderNodes = _tree.DeepAllNodes(1);
             Assert.AreEqual(15, postOrderNodes.Count);
 
@@ -418,7 +418,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PostOrderStack()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             List<BSTNode<int>> postOrderNodes = _tree.DeepAllNodesStack(1);
             Assert.AreEqual(15, postOrderNodes.Count);
 
@@ -442,7 +442,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PostOrderStackSecond()
         {
-            _tree = TreeSeeder.SeedManySecondGenericInt();
+            _tree = TreeSeeder.SeedRandomOrderGeneric();
             List<BSTNode<int>> postOrderNodes = _tree.DeepAllNodesStack(1);
             Assert.AreEqual(6, postOrderNodes.Count);
 
@@ -457,7 +457,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PreOrderRecursion()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             List<BSTNode<int>> preOrderNodes = _tree.DeepAllNodes(2);
             Assert.AreEqual(15, preOrderNodes.Count);
 
@@ -481,7 +481,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PreOrderStack()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             List<BSTNode<int>> preOrderNodes = _tree.DeepAllNodesStack(2);
             Assert.AreEqual(15, preOrderNodes.Count);
 
@@ -505,7 +505,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PreOrderStackSecond()
         {
-            _tree = TreeSeeder.SeedManySecondGenericInt();
+            _tree = TreeSeeder.SeedRandomOrderGeneric();
             List<BSTNode<int>> preOrderNodes = _tree.DeepAllNodesStack(2);
             Assert.AreEqual(6, preOrderNodes.Count);
 
@@ -520,7 +520,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void BreadthTraversal()
         {
-            _tree = TreeSeeder.SeedManyGenericInt();
+            _tree = TreeSeeder.SeedFullTreeGeneric();
             List<BSTNode<int>> inBreadthNodes = _tree.WideAllNodes();
 
             Assert.AreEqual(15, inBreadthNodes.Count);
@@ -545,7 +545,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void BreadthTraversalSecond()
         {
-            _tree = TreeSeeder.SeedManySecondGenericInt();
+            _tree = TreeSeeder.SeedRandomOrderGeneric();
             List<BSTNode<int>> inBreadthNodes = _tree.WideAllNodes();
 
             Assert.AreEqual(6, inBreadthNodes.Count);
@@ -568,7 +568,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void InOrderRecursion()
         {
-            _tree = TreeSeeder.SeedMany();
+            _tree = TreeSeeder.SeedFullTree();
             List<BSTNode> inOrderNodes = _tree.DeepAllNodes(0);
             Assert.AreEqual(15, inOrderNodes.Count);
 
@@ -581,7 +581,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void InOrderStack()
         {
-            _tree = TreeSeeder.SeedMany();
+            _tree = TreeSeeder.SeedFullTree();
             List<BSTNode> inOrderNodes = _tree.DeepAllNodesStack(0);
             Assert.AreEqual(15, inOrderNodes.Count);
 
@@ -594,7 +594,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void InOrderStackSecond()
         {
-            _tree = TreeSeeder.SeedManySecond();
+            _tree = TreeSeeder.SeedRandomOrderSecond();
             List<BSTNode> inOrderNodes = _tree.DeepAllNodesStack(0);
 
             Assert.AreEqual(6, inOrderNodes.Count);
@@ -610,7 +610,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PostOrderRecursion()
         {
-            _tree = TreeSeeder.SeedMany();
+            _tree = TreeSeeder.SeedFullTree();
             List<BSTNode> postOrderNodes = _tree.DeepAllNodes(1);
             Assert.AreEqual(15, postOrderNodes.Count);
 
@@ -634,7 +634,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PostOrderStack()
         {
-            _tree = TreeSeeder.SeedMany();
+            _tree = TreeSeeder.SeedFullTree();
             List<BSTNode> postOrderNodes = _tree.DeepAllNodesStack(1);
             Assert.AreEqual(15, postOrderNodes.Count);
 
@@ -658,7 +658,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PostOrderStackSecond()
         {
-            _tree = TreeSeeder.SeedManySecond();
+            _tree = TreeSeeder.SeedRandomOrderSecond();
             List<BSTNode> postOrderNodes = _tree.DeepAllNodesStack(1);
             Assert.AreEqual(6, postOrderNodes.Count);
 
@@ -673,7 +673,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PreOrderRecursion()
         {
-            _tree = TreeSeeder.SeedMany();
+            _tree = TreeSeeder.SeedFullTree();
             List<BSTNode> preOrderNodes = _tree.DeepAllNodes(2);
             Assert.AreEqual(15, preOrderNodes.Count);
 
@@ -697,7 +697,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PreOrderStack()
         {
-            _tree = TreeSeeder.SeedMany();
+            _tree = TreeSeeder.SeedFullTree();
             List<BSTNode> preOrderNodes = _tree.DeepAllNodesStack(2);
             Assert.AreEqual(15, preOrderNodes.Count);
 
@@ -721,7 +721,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void PreOrderStackSecond()
         {
-            _tree = TreeSeeder.SeedManySecond();
+            _tree = TreeSeeder.SeedRandomOrderSecond();
             List<BSTNode> preOrderNodes = _tree.DeepAllNodesStack(2);
             Assert.AreEqual(6, preOrderNodes.Count);
 
@@ -736,7 +736,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void BreadthTraversal()
         {
-            _tree = TreeSeeder.SeedMany();
+            _tree = TreeSeeder.SeedFullTree();
             List<BSTNode> inBreadthNodes = _tree.WideAllNodes();
 
             Assert.AreEqual(15, inBreadthNodes.Count);
@@ -761,7 +761,7 @@ namespace BinaryTreeTests
         [TestMethod]
         public void BreadthTraversalSecond()
         {
-            _tree = TreeSeeder.SeedManySecond();
+            _tree = TreeSeeder.SeedRandomOrderSecond();
             List<BSTNode> inBreadthNodes = _tree.WideAllNodes();
 
             Assert.AreEqual(6, inBreadthNodes.Count);
@@ -777,7 +777,7 @@ namespace BinaryTreeTests
 
     public static class TreeSeeder
     {
-        public static BST<int> SeedManyGenericInt()
+        public static BST<int> SeedFullTreeGeneric()
         {
             BSTNode<int> root = new BSTNode<int>(8, 8, null);
             BST<int> tree = new BST<int>(root);
@@ -802,7 +802,7 @@ namespace BinaryTreeTests
             return tree;
         }
 
-        public static BST SeedMany()
+        public static BST SeedFullTree()
         {
             BSTNode root = new BSTNode(8, 8, null);
             BST tree = new BST(root);
@@ -827,7 +827,7 @@ namespace BinaryTreeTests
             return tree;
         }
 
-        public static BST<int> SeedManySecondGenericInt()
+        public static BST<int> SeedRandomOrderGeneric()
         {
             BST<int> tree = new BST<int>(null);
             tree.AddKeyValue(100, 100);
@@ -840,7 +840,7 @@ namespace BinaryTreeTests
             return tree;
         }
 
-        public static BST SeedManySecond()
+        public static BST SeedRandomOrderSecond()
         {
             BST tree = new BST(null);
             tree.AddKeyValue(100,100);
@@ -853,7 +853,7 @@ namespace BinaryTreeTests
             return tree;
         }
 
-        public static BST<int> SeedThreeGenericInt()
+        public static BST<int> SeedThreeNodesGeneric()
         {
             BSTNode<int> root = new BSTNode<int>(2, 2, null);
             BST<int> tree = new BST<int>(root);
