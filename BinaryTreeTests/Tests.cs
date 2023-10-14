@@ -344,7 +344,7 @@ namespace BinaryTreeTests
     }
 
     [TestClass]
-    public class TestTraversal
+    public class TestTraversalGeneric
     {
         private BST<int> _tree = new (null);
 
@@ -560,7 +560,7 @@ namespace BinaryTreeTests
     }
 
     [TestClass]
-    public class TestTraversalWithoutType
+    public class TestTraversalNonGeneric
     {
         private BST _tree = new (null);
 
