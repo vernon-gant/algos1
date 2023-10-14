@@ -8,7 +8,7 @@ namespace BinaryTreeCode
     {
         static void Main(string[] args)
         {
-            var tree = new BST<int>(null);
+            BST<int> tree = new BST<int>(null);
 
             tree.AddKeyValue(1, 1);
         }
