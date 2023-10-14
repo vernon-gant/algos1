@@ -166,13 +166,13 @@ namespace AlgorithmsDataStructures2
             return 1 + count(node.RightChild) + count(node.LeftChild);
         }
 
-        public List<BSTNode<T>> DeepAllNodes(int mode)
+        public List<BSTNode> DeepAllNodes(int mode)
         {
             return mode switch
             {
-                0 => InOrderRecursion(Root),
-                1 => PostOrderRecursion(Root),
-                _ => PreOrderRecursion(Root)
+                0 => InOrderRecursion(Root).Cast<BSTNode>().ToList(),
+                1 => PostOrderRecursion(Root).Cast<BSTNode>().ToList(),
+                _ => PreOrderRecursion(Root).Cast<BSTNode>().ToList()
             };
         }
 
@@ -251,6 +251,7 @@ namespace AlgorithmsDataStructures2
                 nodeList.Add(currentNode);
 
                 if (stack.Count == 0) break;
+
                 currentNode = stack.Peek().RightChild != currentNode ? stack.Peek().RightChild : null;
             }
 
@@ -290,7 +291,7 @@ namespace AlgorithmsDataStructures2
             return nodeList;
         }
 
-        public List<BSTNode<T>> WideAllNodes()
+        public List<BSTNode> WideAllNodes()
         {
             List<BSTNode<T>> nodesList = new List<BSTNode<T>>();
             LinkedList<BSTNode<T>> deque = new LinkedList<BSTNode<T>>();
@@ -305,7 +306,7 @@ namespace AlgorithmsDataStructures2
                 if (currentNode.RightChild != null) deque.AddLast(currentNode.RightChild);
             }
 
-            return nodesList;
+            return nodesList.Cast<BSTNode>().ToList();
         }
     }
 }
