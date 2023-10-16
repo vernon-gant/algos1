@@ -201,6 +201,7 @@ namespace AlgorithmsDataStructures2
 
             return nodesList.Cast<BSTNode>().ToList();
         }
+
         private List<BSTNode<T>> InOrderRecursion(BSTNode<T> currentNode)
         {
             if (currentNode == null) return new List<BSTNode<T>>();
@@ -212,6 +213,7 @@ namespace AlgorithmsDataStructures2
 
             return nodeList;
         }
+
         private List<BSTNode<T>> PostOrderRecursion(BSTNode<T> currentNode)
         {
             if (currentNode == null) return new List<BSTNode<T>>();
@@ -223,6 +225,7 @@ namespace AlgorithmsDataStructures2
 
             return nodeList;
         }
+
         private List<BSTNode<T>> PreOrderRecursion(BSTNode<T> currentNode)
         {
             if (currentNode == null) return new List<BSTNode<T>>();
@@ -234,6 +237,7 @@ namespace AlgorithmsDataStructures2
 
             return nodeList;
         }
+
         public List<BSTNode> DeepAllNodesStack(int mode)
         {
             return mode switch
@@ -243,6 +247,7 @@ namespace AlgorithmsDataStructures2
                 _ => PreOrderStack().Cast<BSTNode>().ToList()
             };
         }
+
         private List<BSTNode<T>> InOrderStack()
         {
             List<BSTNode<T>> nodeList = new List<BSTNode<T>>();
@@ -265,6 +270,7 @@ namespace AlgorithmsDataStructures2
 
             return nodeList;
         }
+
         private List<BSTNode<T>> PostOrderStack()
         {
             List<BSTNode<T>> nodeList = new List<BSTNode<T>>();
@@ -289,6 +295,7 @@ namespace AlgorithmsDataStructures2
 
             return nodeList;
         }
+
         private List<BSTNode<T>> PreOrderStack()
         {
             List<BSTNode<T>> nodeList = new List<BSTNode<T>>();
