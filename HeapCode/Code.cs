@@ -28,17 +28,17 @@ namespace AlgorithmsDataStructures2
             if (Count == 0) return -1;
 
             int rootKey = HeapArray[0];
-            HeapArray[0] =  Count == 1 ? 0 : HeapArray[Count - 1];
+            HeapArray[0] = Count == 1 ? 0 : HeapArray[Count - 1];
             HeapArray[Count - 1] = 0;
 
-            int currentIdx = 0;
-            int maxChildIdx = GetMaxChildIndex(currentIdx);
+            int currentIdx;
+            int maxChildIdx;
 
-            while (maxChildIdx != -1 && HeapArray[currentIdx] < HeapArray[maxChildIdx])
+            for (currentIdx = 0, maxChildIdx = GetMaxChildIndex(currentIdx);
+                 maxChildIdx != -1 && HeapArray[currentIdx] < HeapArray[maxChildIdx];
+                 currentIdx = maxChildIdx, maxChildIdx = GetMaxChildIndex(currentIdx))
             {
                 (HeapArray[currentIdx], HeapArray[maxChildIdx]) = (HeapArray[maxChildIdx], HeapArray[currentIdx]);
-                currentIdx = maxChildIdx;
-                maxChildIdx = GetMaxChildIndex(currentIdx);
             }
 
             Count--;
@@ -63,16 +63,13 @@ namespace AlgorithmsDataStructures2
 
             int currentIdx = Count;
             HeapArray[currentIdx] = key;
-            int parentIdx = (currentIdx - 1) / 2;
-            bool isBiggerThanParent = key > HeapArray[parentIdx];
 
-            while (isBiggerThanParent)
+            for (int parentIdx = (currentIdx - 1) / 2;
+                 key > HeapArray[parentIdx];
+                 currentIdx = parentIdx, parentIdx = (currentIdx - 1) / 2)
             {
                 HeapArray[currentIdx] = HeapArray[parentIdx];
                 HeapArray[parentIdx] = key;
-                currentIdx = parentIdx;
-                parentIdx = (currentIdx - 1) / 2;
-                isBiggerThanParent = key > HeapArray[parentIdx];
             }
 
             Count++;
