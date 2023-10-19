@@ -59,6 +59,7 @@ namespace AlgorithmsDataStructures2
 
         public bool Add(int key)
         {
+            if (HeapArray == null) return false;
             if (Count == HeapArray.Length) return false;
 
             int currentIdx = Count;
