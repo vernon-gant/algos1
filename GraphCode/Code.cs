@@ -48,7 +48,8 @@ namespace AlgorithmsDataStructures2
 
         public void RemoveVertex(int v)
         {
-            if (InvalidIndex(v) || vertex[v] == null) return;
+            if (InvalidIndex(v)) return;
+
             vertex[v] = null;
 
             for (int i = 0; i < max_vertex; i++)
@@ -70,28 +71,33 @@ namespace AlgorithmsDataStructures2
 
         public bool IsEdge(int v1, int v2)
         {
-            if (InvalidIndex(v1) || InvalidIndex(v2)) return false;
-            if (vertex[v1] == null || vertex[v2] == null) return false;
+            if (InvalidIndicesOperation(v1, v2)) return false;
+
             return m_adjacency[v1, v2] == 1;
         }
 
         public void AddEdge(int v1, int v2)
         {
-            if (InvalidIndex(v1) || InvalidIndex(v2)) return;
-            if (vertex[v1] == null || vertex[v2] == null) return;
+            if (InvalidIndicesOperation(v1, v2)) return;
+
             m_adjacency[v1, v2] = 1;
         }
 
         public void RemoveEdge(int v1, int v2)
         {
-            if (InvalidIndex(v1) || InvalidIndex(v2)) return;
-            if (vertex[v1] == null || vertex[v2] == null) return;
+            if (InvalidIndicesOperation(v1, v2)) return;
+
             m_adjacency[v1, v2] = 0;
         }
 
         private bool InvalidIndex(int v)
         {
             return v < 0 || v >= max_vertex;
+        }
+
+        private bool InvalidIndicesOperation(int v1, int v2)
+        {
+            return InvalidIndex(v1) || InvalidIndex(v2) || vertex[v1] == null || vertex[v2] == null;
         }
     }
 }
