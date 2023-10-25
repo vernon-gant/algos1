@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace AlgorithmsDataStructures
 {
@@ -65,5 +64,5 @@ namespace AlgorithmsDataStructures
 
             return default;
         }
-    } 
+    }
 }
