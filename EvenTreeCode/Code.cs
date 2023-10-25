@@ -68,13 +68,11 @@ namespace AlgorithmsDataStructures2
         {
             var allNodesList = new List<SimpleTreeNode<T>>();
 
-            if (parent.Children != null)
-                foreach (var child in parent.Children)
-                {
-                    allNodesList.AddRange(getAllNodes(child));
-                }
-
             allNodesList.Add(parent);
+
+            if (parent.Children == null || parent.Children.Count == 0) return allNodesList;
+
+            foreach (var child in parent.Children) allNodesList.AddRange(getAllNodes(child));
 
             return allNodesList;
         }
@@ -86,16 +84,13 @@ namespace AlgorithmsDataStructures2
 
         private List<SimpleTreeNode<T>> findNodesByValue(T value, SimpleTreeNode<T> node)
         {
+            if (node.Children == null || node.Children.Count == 0) return new List<SimpleTreeNode<T>>();
+
             var sameValueNodes = new List<SimpleTreeNode<T>>();
 
-            if (Equal(value, node.NodeValue))
-                sameValueNodes.Add(node);
+            if (Equal(value, node.NodeValue)) sameValueNodes.Add(node);
 
-            if (node.Children != null)
-                foreach (var child in node.Children)
-                {
-                    sameValueNodes.AddRange(findNodesByValue(value, child));
-                }
+            foreach (var child in node.Children) sameValueNodes.AddRange(findNodesByValue(value, child));
 
             return sameValueNodes;
         }
@@ -115,13 +110,11 @@ namespace AlgorithmsDataStructures2
 
         private int count(SimpleTreeNode<T> node)
         {
+            if (node.Children == null || node.Children.Count == 0) return 1;
+
             int counter = 1;
 
-            if (node.Children != null)
-                foreach (var child in node.Children)
-                {
-                    counter += count(child);
-                }
+            foreach (var child in node.Children) counter += count(child);
 
             return counter;
         }
@@ -133,15 +126,11 @@ namespace AlgorithmsDataStructures2
 
         private int leafCount(SimpleTreeNode<T> node)
         {
-            if (node.Children == null || node.Children.Count == 0)
-                return 1;
+            if (node.Children == null || node.Children.Count == 0) return 1;
 
             int counter = 0;
 
-            foreach (var child in node.Children)
-            {
-                counter += leafCount(child);
-            }
+            foreach (var child in node.Children) counter += leafCount(child);
 
             return counter;
         }
@@ -153,33 +142,35 @@ namespace AlgorithmsDataStructures2
 
         private void showNodesLevel(SimpleTreeNode<T> node, int level)
         {
+            if (node == null) return;
+
             Console.WriteLine($"Node: {node.NodeValue}, Level: {level}");
 
-            if (node.Children != null && node.Children.Count > 0)
-                foreach (var child in node.Children)
-                {
-                    showNodesLevel(child, level + 1);
-                }
+            if (node.Children == null || node.Children.Count == 0) return;
+
+            foreach (var child in node.Children) showNodesLevel(child, level + 1);
         }
 
         public List<T> EvenTrees()
         {
             (int _, List<T> deletedConnections) = evenTrees(Root);
+
             return deletedConnections;
         }
 
         private (int, List<T>) evenTrees(SimpleTreeNode<T> currentNode)
         {
+            if (currentNode.Children == null || currentNode.Children.Count == 0) return (1, new List<T>());
+
             int nodeAndChildrenCnt = 1;
             List<T> currentDeletedConn = new List<T>();
 
-            if (currentNode.Children != null)
-                foreach (var child in currentNode.Children)
-                {
-                    (int childrenCounter, List<T> childrenDeletedConn) = evenTrees(child);
-                    currentDeletedConn.AddRange(childrenDeletedConn);
-                    nodeAndChildrenCnt += childrenCounter;
-                }
+            foreach (var child in currentNode.Children)
+            {
+                (int childrenCounter, List<T> childrenDeletedConn) = evenTrees(child);
+                currentDeletedConn.AddRange(childrenDeletedConn);
+                nodeAndChildrenCnt += childrenCounter;
+            }
 
             if (nodeAndChildrenCnt % 2 == 0 && currentNode.Parent != null)
             {
