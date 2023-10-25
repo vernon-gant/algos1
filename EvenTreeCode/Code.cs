@@ -53,8 +53,7 @@ namespace AlgorithmsDataStructures2
 
         public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
         {
-            if (NodeToDelete.Parent == null)
-                return;
+            if (NodeToDelete.Parent == null) return;
 
             NodeToDelete.Parent.Children.Remove(NodeToDelete);
         }
@@ -66,13 +65,13 @@ namespace AlgorithmsDataStructures2
 
         private List<SimpleTreeNode<T>> getAllNodes(SimpleTreeNode<T> parent)
         {
+            if (parent.Children == null || parent.Children.Count == 0) return new List<SimpleTreeNode<T>> { parent };
+
             var allNodesList = new List<SimpleTreeNode<T>>();
 
-            allNodesList.Add(parent);
-
-            if (parent.Children == null || parent.Children.Count == 0) return allNodesList;
-
             foreach (var child in parent.Children) allNodesList.AddRange(getAllNodes(child));
+
+            allNodesList.Add(parent);
 
             return allNodesList;
         }
@@ -84,11 +83,11 @@ namespace AlgorithmsDataStructures2
 
         private List<SimpleTreeNode<T>> findNodesByValue(T value, SimpleTreeNode<T> node)
         {
-            if (node.Children == null || node.Children.Count == 0) return new List<SimpleTreeNode<T>>();
-
             var sameValueNodes = new List<SimpleTreeNode<T>>();
 
             if (Equal(value, node.NodeValue)) sameValueNodes.Add(node);
+
+            if (node.Children == null || node.Children.Count == 0) return sameValueNodes;
 
             foreach (var child in node.Children) sameValueNodes.AddRange(findNodesByValue(value, child));
 

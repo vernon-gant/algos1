@@ -37,6 +37,7 @@ namespace AlgorithmsDataStructures2
 
                 return String.Compare(str1, str2) == 0;
             }
+
             var int1 = (int)(object)v1;
             var int2 = (int)(object)v2;
 
@@ -52,8 +53,8 @@ namespace AlgorithmsDataStructures2
 
         public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
         {
-            if (NodeToDelete.Parent == null)
-                return;
+            if (NodeToDelete.Parent == null) return;
+
             NodeToDelete.Parent.Children.Remove(NodeToDelete);
         }
 
@@ -64,13 +65,11 @@ namespace AlgorithmsDataStructures2
 
         private List<SimpleTreeNode<T>> getAllNodes(SimpleTreeNode<T> parent)
         {
+            if (parent.Children == null || parent.Children.Count == 0) return new List<SimpleTreeNode<T>> { parent };
+
             var allNodesList = new List<SimpleTreeNode<T>>();
 
-            if (parent.Children != null)
-                foreach (var child in parent.Children)
-                {
-                    allNodesList.AddRange(getAllNodes(child));
-                }
+            foreach (var child in parent.Children) allNodesList.AddRange(getAllNodes(child));
 
             allNodesList.Add(parent);
 
@@ -86,14 +85,11 @@ namespace AlgorithmsDataStructures2
         {
             var sameValueNodes = new List<SimpleTreeNode<T>>();
 
-            if (Equal(value,node.NodeValue))
-                sameValueNodes.Add(node);
+            if (Equal(value, node.NodeValue)) sameValueNodes.Add(node);
 
-            if (node.Children != null)
-                foreach (var child in node.Children)
-                {
-                    sameValueNodes.AddRange(findNodesByValue(value,child));
-                }
+            if (node.Children == null || node.Children.Count == 0) return sameValueNodes;
+
+            foreach (var child in node.Children) sameValueNodes.AddRange(findNodesByValue(value, child));
 
             return sameValueNodes;
         }
@@ -113,13 +109,11 @@ namespace AlgorithmsDataStructures2
 
         private int count(SimpleTreeNode<T> node)
         {
+            if (node.Children == null || node.Children.Count == 0) return 1;
+
             int counter = 1;
 
-            if (node.Children != null)
-                foreach (var child in node.Children)
-                {
-                    counter += count(child);
-                }
+            foreach (var child in node.Children) counter += count(child);
 
             return counter;
         }
@@ -131,15 +125,11 @@ namespace AlgorithmsDataStructures2
 
         private int leafCount(SimpleTreeNode<T> node)
         {
-            if (node.Children == null || node.Children.Count == 0)
-                return 1;
+            if (node.Children == null || node.Children.Count == 0) return 1;
 
             int counter = 0;
 
-            foreach (var child in node.Children)
-            {
-                counter += leafCount(child);
-            }
+            foreach (var child in node.Children) counter += leafCount(child);
 
             return counter;
         }
@@ -153,13 +143,9 @@ namespace AlgorithmsDataStructures2
         {
             Console.WriteLine($"Node: {node.NodeValue}, Level: {level}");
 
-            if (node.Children != null && node.Children.Count > 0)
-                foreach (var child in node.Children)
-                {
-                    showNodesLevel(child, level + 1);
-                }
+            if (node.Children == null || node.Children.Count == 0) return;
+
+            foreach (var child in node.Children) showNodesLevel(child, level + 1);
         }
-
     }
-
 }
