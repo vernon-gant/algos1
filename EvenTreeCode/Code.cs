@@ -164,31 +164,31 @@ namespace EvenTreesCode
 
         public List<T> EvenTrees()
         {
-            (int _, List<T> verticesValues) = evenTrees(Root);
-            return verticesValues;
+            (int _, List<T> deletedConnections) = evenTrees(Root);
+            return deletedConnections;
         }
 
         private (int, List<T>) evenTrees(SimpleTreeNode<T> currentNode)
         {
-            int counter = 1;
-            List<T> verticesValues = new List<T>();
+            int nodeAndChildrenCnt = 1;
+            List<T> currentDeletedConn = new List<T>();
 
             if (currentNode.Children != null)
                 foreach (var child in currentNode.Children)
                 {
-                    (int childCounter, List<T> childVerticesValues) = evenTrees(child);
-                    verticesValues.AddRange(childVerticesValues);
-                    counter += childCounter;
+                    (int childrenCounter, List<T> childrenDeletedConn) = evenTrees(child);
+                    currentDeletedConn.AddRange(childrenDeletedConn);
+                    nodeAndChildrenCnt += childrenCounter;
                 }
 
-            if (counter % 2 == 0 && currentNode.Parent != null)
+            if (nodeAndChildrenCnt % 2 == 0 && currentNode.Parent != null)
             {
-                verticesValues.Add(currentNode.Parent.NodeValue);
-                verticesValues.Add(currentNode.NodeValue);
-                counter = 0;
+                currentDeletedConn.Add(currentNode.Parent.NodeValue);
+                currentDeletedConn.Add(currentNode.NodeValue);
+                nodeAndChildrenCnt = 0;
             }
 
-            return (counter, verticesValues);
+            return (nodeAndChildrenCnt, currentDeletedConn);
         }
     }
 }
