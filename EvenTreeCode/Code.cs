@@ -142,8 +142,6 @@ namespace AlgorithmsDataStructures2
 
         private void showNodesLevel(SimpleTreeNode<T> node, int level)
         {
-            if (node == null) return;
-
             Console.WriteLine($"Node: {node.NodeValue}, Level: {level}");
 
             if (node.Children == null || node.Children.Count == 0) return;
