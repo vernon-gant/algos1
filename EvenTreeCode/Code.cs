@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EvenTreesCode
+namespace AlgorithmsDataStructures2
 {
     public class SimpleTreeNode<T>
     {
