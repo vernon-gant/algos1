@@ -73,5 +73,32 @@ namespace EvenTreesTests
             Assert.AreEqual(8, evenTrees[6]);
             Assert.AreEqual(9, evenTrees[7]);
         }
+
+        [TestMethod]
+        public void OneTree()
+        {
+            SimpleTree<int> root = new SimpleTree<int>(new SimpleTreeNode<int>(1, null));
+            SimpleTreeNode<int> node2 = new SimpleTreeNode<int>(2, root.Root);
+            SimpleTreeNode<int> node3 = new SimpleTreeNode<int>(3, node2);
+            SimpleTreeNode<int> node4 = new SimpleTreeNode<int>(4, node2);
+            SimpleTreeNode<int> node5 = new SimpleTreeNode<int>(5, root.Root);
+            SimpleTreeNode<int> node6 = new SimpleTreeNode<int>(6, node5);
+            SimpleTreeNode<int> node7 = new SimpleTreeNode<int>(7, node5);
+            SimpleTreeNode<int> node8 = new SimpleTreeNode<int>(8, root.Root);
+            SimpleTreeNode<int> node9 = new SimpleTreeNode<int>(9, node8);
+            SimpleTreeNode<int> node10 = new SimpleTreeNode<int>(10, node8);
+
+            root.AddChild(root.Root, node2);
+            root.AddChild(node2, node3);
+            root.AddChild(node2, node4);
+            root.AddChild(root.Root, node5);
+            root.AddChild(node5, node6);
+            root.AddChild(node5, node7);
+            root.AddChild(root.Root, node8);
+            root.AddChild(node8, node9);
+            root.AddChild(node8, node10);
+            List<int> evenTrees = root.EvenTrees();
+            Assert.AreEqual(0, evenTrees.Count);
+        }
     }
 }
