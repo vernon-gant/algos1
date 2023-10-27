@@ -118,7 +118,7 @@ namespace AlgorithmsDataStructures2
                 {
                     currentPath.Pop();
                     (currentVertex, currentVertexIdx) = currentPath.Peek();
-                    break;
+                    continue;
                 }
 
                 int destinationIdx = unvisitedNeighbours.BinarySearch(VTo);
@@ -126,7 +126,6 @@ namespace AlgorithmsDataStructures2
                 if (destinationIdx > 0)
                 {
                     currentPath.Push((vertex[destinationIdx], destinationIdx));
-
                     break;
                 }
 
@@ -163,10 +162,7 @@ namespace AlgorithmsDataStructures2
 
             List<Vertex<T>> resultPath = new ();
 
-            foreach (Vertex<T> tempVertex in tempStack)
-            {
-                resultPath.Add(tempVertex);
-            }
+            foreach (Vertex<T> tempVertex in tempStack) resultPath.Add(tempVertex);
 
             return resultPath;
         }
