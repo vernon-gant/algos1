@@ -104,20 +104,19 @@ namespace AlgorithmsDataStructures2
 
         public List<Vertex<T>> DepthFirstSearch(int VFrom, int VTo)
         {
-            Stack<(Vertex<T>, int)> currentPath = new Stack<(Vertex<T>, int)>();
+            Stack<int> currentPath = new Stack<int>();
             int currentVertexIdx = VFrom;
-            Vertex<T> currentVertex = vertex[currentVertexIdx];
-            currentVertex.Hit = true;
-            currentPath.Push((currentVertex, currentVertexIdx));
+            vertex[currentVertexIdx].Hit = true;
+            currentPath.Push(currentVertexIdx);
 
-            for (; currentPath.Count > 0; currentPath.Push((currentVertex, currentVertexIdx)))
+            for (; currentPath.Count > 0; currentPath.Push(currentVertexIdx))
             {
                 List<int> unvisitedNeighbours = GetUnvisitedNeighbours(currentVertexIdx);
 
                 if (unvisitedNeighbours.Count == 0)
                 {
                     currentPath.Pop();
-                    (currentVertex, currentVertexIdx) = currentPath.Peek();
+                    currentVertexIdx = currentPath.Peek();
                     continue;
                 }
 
@@ -125,13 +124,12 @@ namespace AlgorithmsDataStructures2
 
                 if (destinationIdx > 0)
                 {
-                    currentPath.Push((vertex[destinationIdx], destinationIdx));
+                    currentPath.Push(destinationIdx);
                     break;
                 }
 
                 currentVertexIdx = unvisitedNeighbours[0];
-                currentVertex = vertex[currentVertexIdx];
-                currentVertex.Hit = true;
+                vertex[currentVertexIdx].Hit = true;
             }
 
             return StackToPath(currentPath);
@@ -150,19 +148,19 @@ namespace AlgorithmsDataStructures2
             return unvisitedNeighbours;
         }
 
-        private List<Vertex<T>> StackToPath(Stack<(Vertex<T>, int)> path)
+        private List<Vertex<T>> StackToPath(Stack<int> path)
         {
-            Stack<Vertex<T>> tempStack = new ();
+            Stack<int> tempStack = new ();
 
             for (; path.Count > 0; path.Pop())
             {
-                (Vertex<T> tempVertex, int _) = path.Peek();
-                tempStack.Push(tempVertex);
+                int tempVertexIdx = path.Peek();
+                tempStack.Push(tempVertexIdx);
             }
 
             List<Vertex<T>> resultPath = new ();
 
-            foreach (Vertex<T> tempVertex in tempStack) resultPath.Add(tempVertex);
+            foreach (int tempVertexIdx in tempStack) resultPath.Add(vertex[tempVertexIdx]);
 
             return resultPath;
         }
