@@ -105,7 +105,7 @@ namespace AlgorithmsDataStructures2
 
         public List<Vertex<T>> DepthFirstSearch(int VFrom, int VTo)
         {
-            if (InvalidIndicesOperation(VFrom, VTo)) return null;
+            if (InvalidIndicesOperation(VFrom, VTo)) return new List<Vertex<T>>();
             if (VFrom == VTo && m_adjacency[VFrom, VTo] == 1) return StackToPath(new Stack<int>(new[] { VFrom }));
 
             ResetVisited();
