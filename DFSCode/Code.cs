@@ -83,6 +83,7 @@ namespace AlgorithmsDataStructures2
             if (InvalidIndicesOperation(v1, v2)) return;
 
             m_adjacency[v1, v2] = 1;
+            m_adjacency[v2, v1] = 1;
         }
 
         public void RemoveEdge(int v1, int v2)
@@ -104,32 +105,37 @@ namespace AlgorithmsDataStructures2
 
         public List<Vertex<T>> DepthFirstSearch(int VFrom, int VTo)
         {
+            if (InvalidIndicesOperation(VFrom, VTo)) return null;
+            if (VFrom == VTo && m_adjacency[VFrom, VTo] == 1) return StackToPath(new Stack<int>(new[] { VFrom }));
+
+            ResetVisited();
             Stack<int> currentPath = new Stack<int>();
             int currentVertexIdx = VFrom;
             vertex[currentVertexIdx].Hit = true;
             currentPath.Push(currentVertexIdx);
 
-            for (; currentPath.Count > 0; currentPath.Push(currentVertexIdx))
+            for (; currentPath.Count > 0;)
             {
                 List<int> unvisitedNeighbours = GetUnvisitedNeighbours(currentVertexIdx);
 
                 if (unvisitedNeighbours.Count == 0)
                 {
                     currentPath.Pop();
-                    currentVertexIdx = currentPath.Peek();
+                    currentVertexIdx = currentPath.Count > 0 ? currentPath.Peek() : -1;
                     continue;
                 }
 
                 int destinationIdx = unvisitedNeighbours.BinarySearch(VTo);
 
-                if (destinationIdx > 0)
+                if (destinationIdx >= 0)
                 {
-                    currentPath.Push(destinationIdx);
+                    currentPath.Push(VTo);
                     break;
                 }
 
                 currentVertexIdx = unvisitedNeighbours[0];
                 vertex[currentVertexIdx].Hit = true;
+                currentPath.Push(currentVertexIdx);
             }
 
             return StackToPath(currentPath);
@@ -163,6 +169,14 @@ namespace AlgorithmsDataStructures2
             foreach (int tempVertexIdx in tempStack) resultPath.Add(vertex[tempVertexIdx]);
 
             return resultPath;
+        }
+
+        private void ResetVisited()
+        {
+            for (int i = 0; i < max_vertex; i++)
+            {
+                if (vertex[i] != null) vertex[i].Hit = false;
+            }
         }
     }
 }
