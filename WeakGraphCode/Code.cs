@@ -139,7 +139,7 @@ namespace AlgorithmsDataStructures2
         {
             List<int> realNeighbours = new List<int>();
 
-            foreach (int neighbour in Enumerable.Range(0, max_vertex - 1))
+            foreach (int neighbour in Enumerable.Range(0, max_vertex))
             {
                 if (IsEdge(vertexIdx, neighbour) && neighbour != vertexIdx) realNeighbours.Add(neighbour);
             }

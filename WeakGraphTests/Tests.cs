@@ -40,6 +40,21 @@ namespace WeakGraphTests
         }
 
         [TestMethod]
+        public void ThreeWeakVertices()
+        {
+            SimpleGraph<int> graph = new SimpleGraph<int>(9);
+
+            GraphSeeder.SeedNineVerticesSecond(graph);
+
+            List<Vertex<int>> weakVertices = graph.WeakVertices();
+
+            Assert.AreEqual(3, weakVertices.Count);
+            Assert.AreEqual(3, weakVertices[0].Value);
+            Assert.AreEqual(5, weakVertices[1].Value);
+            Assert.AreEqual(7, weakVertices[2].Value);
+        }
+
+        [TestMethod]
         public void OnlyStrongVertices()
         {
             SimpleGraph<int> graph = new SimpleGraph<int>(9);
@@ -151,6 +166,28 @@ namespace WeakGraphTests
             graph.AddEdge(6, 7);
 
             graph.AddEdge(7, 8);
+        }
+
+        public static void SeedNineVerticesSecond(SimpleGraph<int> graph)
+        {
+            for (int i = 0; i <= 8; i++) graph.AddVertex(i);
+
+            graph.AddEdge(0, 6);
+            graph.AddEdge(0, 7);
+            graph.AddEdge(0, 8);
+
+            graph.AddEdge(6, 8);
+            graph.AddEdge(6, 5);
+            graph.AddEdge(6, 4);
+
+            graph.AddEdge(5, 2);
+
+            graph.AddEdge(2, 1);
+            graph.AddEdge(2, 4);
+
+            graph.AddEdge(4, 1);
+
+            graph.AddEdge(1, 3);
         }
     }
 }
