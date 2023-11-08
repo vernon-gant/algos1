@@ -92,6 +92,7 @@ namespace AlgorithmsDataStructures2
             if (InvalidIndicesOperation(v1, v2)) return;
 
             m_adjacency[v1, v2] = 0;
+            m_adjacency[v2, v1] = 0;
         }
 
         private bool InvalidIndex(int v)
@@ -121,7 +122,6 @@ namespace AlgorithmsDataStructures2
                         if (firstNeighbour != secondNeighbour && IsEdge(firstNeighbour, secondNeighbour))
                         {
                             isStrongVertex = true;
-
                             break;
                         }
                     }
@@ -135,7 +135,7 @@ namespace AlgorithmsDataStructures2
             return weakVertices;
         }
 
-        public List<int> GetRealNeighbours(int vertexIdx)
+        private List<int> GetRealNeighbours(int vertexIdx)
         {
             List<int> realNeighbours = new List<int>();
 

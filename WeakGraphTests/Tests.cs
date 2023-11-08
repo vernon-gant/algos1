@@ -7,10 +7,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace WeakGraphTests
 {
     [TestClass]
-    public class TwoGraphs
+    public class Tests
     {
         [TestMethod]
-        public void ExistingFourWeakVertices()
+        public void FourWeakVertices()
         {
             SimpleGraph<int> graph = new SimpleGraph<int>(13);
 
@@ -26,7 +26,7 @@ namespace WeakGraphTests
         }
 
         [TestMethod]
-        public void ExistingTwoVertices()
+        public void TwoWeakVertices()
         {
             SimpleGraph<int> graph = new SimpleGraph<int>(9);
 
@@ -49,6 +49,34 @@ namespace WeakGraphTests
             graph.AddEdge(3, 5);
 
             graph.AddEdge(5, 8);
+
+            List<Vertex<int>> weakVertices = graph.WeakVertices();
+
+            Assert.AreEqual(0, weakVertices.Count);
+        }
+
+        [TestMethod]
+        public void OnlyWeakVertices()
+        {
+            SimpleGraph<int> graph = new SimpleGraph<int>(9);
+
+            GraphSeeder.SeedNineVertices(graph);
+
+            graph.RemoveEdge(1, 2);
+
+            graph.RemoveEdge(2, 3);
+
+            graph.RemoveEdge(5, 7);
+
+            List<Vertex<int>> weakVertices = graph.WeakVertices();
+
+            Assert.AreEqual(9, weakVertices.Count);
+        }
+
+        [TestMethod]
+        public void EmptyGraph()
+        {
+            SimpleGraph<int> graph = new SimpleGraph<int>(0);
 
             List<Vertex<int>> weakVertices = graph.WeakVertices();
 
